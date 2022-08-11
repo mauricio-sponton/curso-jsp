@@ -2,19 +2,29 @@
 	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="ISO-8859-1">
-		<title>Insert title here</title>
-	</head>
-	<body>
-	
-		<h1>Bem-vindo ao curso de JSP</h1>
+<head>
+<meta charset="ISO-8859-1">
+<title>Curso JSP</title>
+</head>
+<body>
 
-		<form action="ServletLogin" method="post">
-			<input name="nome">
-			<input name="idade"> 
-			<input type="submit" value="Enviar">
-		</form>
+	<h1>Bem-vindo ao curso de JSP</h1>
+
+	<form action="ServletLogin" method="post">
+		<table>
+			<tr>
+				<td><input name="login" type="text"></td>
+			</tr>
+			<tr>
+				<td><input name="senha" type="password"></td>
+			</tr>
+			<tr>
+				<td><input type="submit" value="Enviar"></td>
+			</tr>
+		</table>
+	</form>
 	
-	</body>
+	<h4>${msg}</h4>
+
+</body>
 </html>
