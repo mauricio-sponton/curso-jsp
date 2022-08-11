@@ -13,30 +13,37 @@
 
 <title>Curso JSP</title>
 <style>
-	.container {
-		margin-top: 20em
-	}
-	.btn-login, .msg-erro{
-		margin-top: 1em
-	}
+.container {
+	margin-top: 20em
+}
 
+.btn-login, .msg-erro {
+	margin-top: 1em
+}
 </style>
 </head>
 <body>
 
 	<div class="container">
-		<h1>Bem-vindo ao curso de JSP</h1>
+		<h3 class="mb-4">Bem-vindo ao curso de JSP</h3>
 
-		<form action="ServletLogin" method="post" class="row g-3">
+		<form action="ServletLogin" method="post"
+			class="row g-3 needs-validation" novalidate>
 			<input type="hidden" value="<%=request.getParameter("url")%>"
 				name="url">
-			<div class="col-12">
+
+			<div class="col-12 mb-2">
 				<label for="inputAddress" class="form-label">Login</label> <input
-					name="login" type="text" class="form-control" id="login">
+					name="login" type="text" class="form-control" id="login" required>
+				<div class="invalid-feedback">Informe seu login</div>
+				<div class="valid-feedback">Tudo certo!</div>
 			</div>
-			<div class="col-12">
+			<div class="col-12 mb-2">
 				<label for="senha" class="form-label">Senha</label> <input
-					name="senha" type="password" id="senha" class="form-control">
+					name="senha" type="password" id="senha" class="form-control"
+					required>
+				<div class="invalid-feedback">Informe sua senha</div>
+				<div class="valid-feedback">Tudo certo!</div>
 			</div>
 			<div class="col-12 btn-login">
 				<button type="submit" class="btn btn-primary">Enviar</button>
@@ -45,9 +52,29 @@
 
 		</form>
 
-	
+
 		<h4 class="msg-erro">${msg}</h4>
 	</div>
+
+	<script type="text/javascript">
+	(function() {
+		  'use strict'
+
+		  const forms = document.querySelectorAll('.needs-validation')
+
+		  Array.from(forms).forEach(form => {
+		    form.addEventListener('submit', event => {
+		      if (!form.checkValidity()) {
+		        event.preventDefault()
+		        event.stopPropagation()
+		      }
+
+		      form.classList.add('was-validated')
+		    }, false)
+		  })
+		})()
+	</script>
+
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>
