@@ -14,4 +14,13 @@
     <servlet-name>ServletLogin</servlet-name>
     <url-pattern>/ServletLogin</url-pattern>
   </servlet-mapping>
+  <filter>
+    <display-name>AutenticacaoFilter</display-name>
+    <filter-name>AutenticacaoFilter</filter-name>
+    <filter-class>br.com.mbs.cursojsp.filter.AutenticacaoFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AutenticacaoFilter</filter-name>
+    <url-pattern>/AutenticacaoFilter</url-pattern>
+  </filter-mapping>
 </web-app>
