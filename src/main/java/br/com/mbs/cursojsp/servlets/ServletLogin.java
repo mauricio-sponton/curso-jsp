@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = { "/principal/ServletLogin" })
 public class ServletLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String PAGINA_LOGIN = "/index.jsp";
+	private static final String ERRO_LOGIN = "Informe o login e senha correto!";
 
 	private LoginRepository loginRepository = new LoginRepository();
 
@@ -50,21 +52,24 @@ public class ServletLogin extends HttpServlet {
 					RequestDispatcher redirecionar = request.getRequestDispatcher(url);
 					redirecionar.forward(request, response);
 				} else {
-					redirecionarPaginaLogin(request, response);
+					redirecionarPagina(request, response, PAGINA_LOGIN, ERRO_LOGIN);
 				}
 			} else {
-				redirecionarPaginaLogin(request, response);
+				redirecionarPagina(request, response, PAGINA_LOGIN, ERRO_LOGIN);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			redirecionarPagina(request, response, "/erro.jsp", e.getMessage());
 		}
 
 	}
+	
+	
 
-	private void redirecionarPaginaLogin(HttpServletRequest request, HttpServletResponse response)
+	private void redirecionarPagina(HttpServletRequest request, HttpServletResponse response, String pagina, String erro)
 			throws ServletException, IOException {
-		RequestDispatcher redirecionar = request.getRequestDispatcher("/index.jsp");
-		request.setAttribute("msg", "Informe o login e senha corretos!");
+		RequestDispatcher redirecionar = request.getRequestDispatcher(pagina);
+		request.setAttribute("msg", erro);
 		redirecionar.forward(request, response);
 	}
 }
