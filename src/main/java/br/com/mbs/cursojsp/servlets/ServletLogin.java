@@ -28,9 +28,11 @@ public class ServletLogin extends HttpServlet {
 		
 		String acao = request.getParameter("acao");
 		
+		//System.out.println(acao);
+		
 		if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("logout")) {
 			request.getSession().invalidate();
-			RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
 			dispatcher.forward(request, response);
 		}else {
 			
