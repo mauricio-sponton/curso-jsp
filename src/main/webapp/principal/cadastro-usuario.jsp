@@ -26,7 +26,66 @@
 								<div class="page-wrapper">
 									<div class="page-body">
 										<div class="row">
-											<h2>Cadastro de usuário</h2>
+
+											<div class="col-sm-12">
+												<div class="card">
+													<div class="card-header">
+														<h5>Cadastro de usuário</h5>
+													</div>
+													<div class="card-block">
+														<h4 class="sub-title">Basic Inputs</h4>
+														<form class="form-material" autocomplete="off">
+															<div class="form-group row">
+																<div class="col-sm-1">
+																	<div class="form-group form-default">
+																		<input type="text" name="footer-email"
+																			class="form-control" required disabled> <span
+																			class="form-bar"></span> <label class="float-label">ID</label>
+																	</div>
+
+																</div>
+															</div>
+															<div class="form-group row">
+																<div class="col-sm-12">
+																	<div class="form-group form-default">
+																		<input type="text" name="footer-email"
+																			class="form-control" required> <span
+																			class="form-bar"></span> <label class="float-label">Nome</label>
+																	</div>
+																</div>
+															</div>
+
+
+															<div class="form-group row">
+																<div class="col-sm-12">
+																	<div class="form-group form-default">
+																		<input type="text" name="footer-email"
+																			class="form-control" required> <span
+																			class="form-bar"></span> <label class="float-label">Email</label>
+																	</div>
+
+																</div>
+															</div>
+															<div class="form-group row">
+																<div class="col-sm-12">
+																	<div class="form-group form-default">
+																		<input type="text" name="footer-email"
+																			class="form-control" required> <span
+																			class="form-bar"></span> <label class="float-label">Senha</label>
+																	</div>
+																</div>
+															</div>
+															
+														
+															 <button class="btn waves-effect waves-light btn-primary">Cadastrar</button>
+															
+														</form>
+													</div>
+												</div>
+											</div>
+
+
+
 										</div>
 									</div>
 								</div>
