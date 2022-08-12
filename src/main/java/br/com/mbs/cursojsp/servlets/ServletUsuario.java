@@ -40,7 +40,7 @@ public class ServletUsuario extends HttpServlet {
 			usuario.setLogin(login);
 			usuario.setSenha(senha);
 
-			usuarioRepository.salvar(usuario);
+			usuario = usuarioRepository.salvar(usuario);
 
 			request.setAttribute("msg", "Operação realizada com sucesso!");
 			request.setAttribute("usuarioSalvo", usuario);
