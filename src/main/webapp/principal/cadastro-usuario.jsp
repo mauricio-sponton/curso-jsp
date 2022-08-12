@@ -33,13 +33,12 @@
 														<h5>Cadastro de usuário</h5>
 													</div>
 													<div class="card-block">
-														<h4 class="sub-title">Basic Inputs</h4>
-														<form class="form-material"
+														<form class="form-material" id="formUsuario"
 															action="<%=request.getContextPath()%>/ServletUsuario"
 															method="post">
 															<div class="form-group row">
 																<div class="col-sm-1">
-																	<div class="form-group form-default">
+																	<div class="form-group form-default form-static-label">
 																		<input type="text" name="id" id="id"
 																			value="${usuarioSalvo.id}" class="form-control"
 																			readonly> <span class="form-bar"></span> <label
@@ -95,8 +94,8 @@
 															</div>
 
 
-															<button class="btn waves-effect waves-light btn-primary">Cadastrar</button>
-															<button class="btn waves-effect waves-light btn-success">Editar</button>
+															<button class="btn waves-effect waves-light btn-primary" onclick="limparForm();">Novo</button>
+															<button class="btn waves-effect waves-light btn-success">Salvar</button>
 															<button class="btn waves-effect waves-light btn-danger">Excluir</button>
 
 														</form>
@@ -120,6 +119,17 @@
 
 
 	<jsp:include page="javascript.jsp"></jsp:include>
+	<script type="text/javascript">
+		
+		function limparForm() {
+			var form = document.getElementById('formUsuario').elements;
+			
+			for(var i=0; i < form.length; i++){
+				form[i].value = '';
+			}
+		}
+	
+	</script>
 </body>
 
 </html>
