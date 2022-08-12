@@ -35,6 +35,7 @@ public class ServletUsuario extends HttpServlet {
 		usuario.setSenha(senha);
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("principal/cadastro-usuario.jsp");
+		request.setAttribute("usuarioSalvo", usuario);
 		dispatcher.forward(request, response);
 		
 	}
