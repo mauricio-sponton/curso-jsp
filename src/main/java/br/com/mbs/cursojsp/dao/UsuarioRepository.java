@@ -18,17 +18,33 @@ public class UsuarioRepository {
 
 	public Usuario salvar(Usuario usuario) throws SQLException {
 
-		String sql = "insert into usuario (login, senha, nome, email) values (?, ?, ?, ?)";
-		PreparedStatement statement = connection.prepareStatement(sql);
+		if (usuario.naoExiste()) {
 
-		statement.setString(1, usuario.getLogin());
-		statement.setString(2, usuario.getSenha());
-		statement.setString(3, usuario.getNome());
-		statement.setString(4, usuario.getEmail());
+			String sql = "insert into usuario (login, senha, nome, email) values (?, ?, ?, ?)";
+			PreparedStatement statement = connection.prepareStatement(sql);
 
-		statement.execute();
+			statement.setString(1, usuario.getLogin());
+			statement.setString(2, usuario.getSenha());
+			statement.setString(3, usuario.getNome());
+			statement.setString(4, usuario.getEmail());
 
-		connection.commit();
+			statement.execute();
+
+			connection.commit();
+		}else {
+
+			String sql = "update usuario set login=?, senha=?, nome=?, email=? where id= "+ usuario.getId() +"";
+			PreparedStatement statement = connection.prepareStatement(sql);
+
+			statement.setString(1, usuario.getLogin());
+			statement.setString(2, usuario.getSenha());
+			statement.setString(3, usuario.getNome());
+			statement.setString(4, usuario.getEmail());
+
+			statement.executeUpdate();
+
+			connection.commit();
+		}
 
 		return this.buscarPorLogin(usuario.getLogin());
 	}

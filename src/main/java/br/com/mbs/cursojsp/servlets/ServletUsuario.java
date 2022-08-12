@@ -43,6 +43,7 @@ public class ServletUsuario extends HttpServlet {
 			usuario.setLogin(login);
 			usuario.setSenha(senha);
 			
+			
 			if(usuarioRepository.validarLogin(usuario.getLogin()) && usuario.getId() == null) {
 				msg = "Já existe usuário com esse login!";
 			}else {

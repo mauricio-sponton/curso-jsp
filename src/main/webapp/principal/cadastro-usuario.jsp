@@ -42,7 +42,7 @@
 																	<div class="form-group form-default">
 																		<input type="text" name="id" id="id"
 																			value="${usuarioSalvo.id}" class="form-control"
-																			disabled> <span class="form-bar"></span> <label
+																			readonly> <span class="form-bar"></span> <label
 																			class="float-label">ID</label>
 																	</div>
 
