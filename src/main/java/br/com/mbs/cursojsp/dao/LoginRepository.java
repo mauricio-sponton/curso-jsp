@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import br.com.mbs.cursojsp.connection.SingleConnection;
-import br.com.mbs.cursojsp.model.Login;
+import br.com.mbs.cursojsp.model.Usuario;
 
 public class LoginRepository {
 
@@ -16,7 +16,7 @@ public class LoginRepository {
 		connection = SingleConnection.getConnection();
 	}
 	
-	public boolean validarAutenticacao(Login login) throws SQLException {
+	public boolean validarAutenticacao(Usuario login) throws SQLException {
 		
 		String sql = "select * from login where login = ? and senha = ?";
 		

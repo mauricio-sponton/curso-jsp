@@ -3,7 +3,7 @@ package br.com.mbs.cursojsp.servlets;
 import java.io.IOException;
 
 import br.com.mbs.cursojsp.dao.LoginRepository;
-import br.com.mbs.cursojsp.model.Login;
+import br.com.mbs.cursojsp.model.Usuario;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -28,7 +28,6 @@ public class ServletLogin extends HttpServlet {
 		
 		String acao = request.getParameter("acao");
 		
-		//System.out.println(acao);
 		
 		if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("logout")) {
 			request.getSession().invalidate();
@@ -52,12 +51,12 @@ public class ServletLogin extends HttpServlet {
 
 			if (login != null && !login.isEmpty() && senha != null && !senha.isEmpty()) {
 
-				var loginModel = new Login();
-				loginModel.setLogin(login);
-				loginModel.setSenha(senha);
+				var usuario = new Usuario();
+				usuario.setLogin(login);
+				usuario.setSenha(senha);
 
-				if (loginRepository.validarAutenticacao(loginModel)) {
-					request.getSession().setAttribute("usuario", loginModel.getLogin());
+				if (loginRepository.validarAutenticacao(usuario)) {
+					request.getSession().setAttribute("usuario", usuario.getLogin());
 
 					if (url == null || url.equals("null")) {
 						url = "principal/principal.jsp";

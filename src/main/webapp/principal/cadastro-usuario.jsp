@@ -34,12 +34,14 @@
 													</div>
 													<div class="card-block">
 														<h4 class="sub-title">Basic Inputs</h4>
-														<form class="form-material" autocomplete="off">
+														<form class="form-material"
+															action="<%= request.getContextPath() %>/ServletUsuario"
+															method="post">
 															<div class="form-group row">
 																<div class="col-sm-1">
 																	<div class="form-group form-default">
-																		<input type="text" name="footer-email"
-																			class="form-control" required disabled> <span
+																		<input type="text" name="id" id="id"
+																			class="form-control" disabled> <span
 																			class="form-bar"></span> <label class="float-label">ID</label>
 																	</div>
 
@@ -48,7 +50,7 @@
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
-																		<input type="text" name="footer-email"
+																		<input type="text" name="nome" id="nome"
 																			class="form-control" required> <span
 																			class="form-bar"></span> <label class="float-label">Nome</label>
 																	</div>
@@ -59,9 +61,20 @@
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
-																		<input type="text" name="footer-email"
+																		<input type="email" name="email" id="email"
 																			class="form-control" required> <span
 																			class="form-bar"></span> <label class="float-label">Email</label>
+																	</div>
+
+																</div>
+															</div>
+
+															<div class="form-group row">
+																<div class="col-sm-12">
+																	<div class="form-group form-default">
+																		<input type="text" name="login" id="login"
+																			class="form-control" required> <span
+																			class="form-bar"></span> <label class="float-label">Login</label>
 																	</div>
 
 																</div>
@@ -69,16 +82,18 @@
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
-																		<input type="text" name="footer-email"
+																		<input type="text" name="senha" id="senha"
 																			class="form-control" required> <span
 																			class="form-bar"></span> <label class="float-label">Senha</label>
 																	</div>
 																</div>
 															</div>
-															
-														
-															 <button class="btn waves-effect waves-light btn-primary">Cadastrar</button>
-															
+
+
+															<button class="btn waves-effect waves-light btn-primary">Cadastrar</button>
+															<button class="btn waves-effect waves-light btn-success">Editar</button>
+															<button class="btn waves-effect waves-light btn-danger">Excluir</button>
+
 														</form>
 													</div>
 												</div>
