@@ -26,6 +26,9 @@ public class ServletUsuario extends HttpServlet {
 			throws ServletException, IOException {
 
 		try {
+			
+			String msg = "Operação realizada com sucesso!";
+			
 			String id = request.getParameter("id");
 			String nome = request.getParameter("nome");
 			String email = request.getParameter("email");
@@ -39,10 +42,15 @@ public class ServletUsuario extends HttpServlet {
 			usuario.setEmail(email);
 			usuario.setLogin(login);
 			usuario.setSenha(senha);
+			
+			if(usuarioRepository.validarLogin(usuario.getLogin()) && usuario.getId() == null) {
+				msg = "Já existe usuário com esse login!";
+			}else {
+				usuario = usuarioRepository.salvar(usuario);
+			}
 
-			usuario = usuarioRepository.salvar(usuario);
 
-			request.setAttribute("msg", "Operação realizada com sucesso!");
+			request.setAttribute("msg", msg);
 			request.setAttribute("usuarioSalvo", usuario);
 
 			request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);

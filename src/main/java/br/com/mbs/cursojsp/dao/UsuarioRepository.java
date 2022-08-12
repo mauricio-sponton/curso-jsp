@@ -29,13 +29,13 @@ public class UsuarioRepository {
 		statement.execute();
 
 		connection.commit();
-		
+
 		return this.buscarPorLogin(usuario.getLogin());
 	}
 
 	public Usuario buscarPorLogin(String login) throws SQLException {
 
-		String sql = "select * from usuario where upper(login) = upper('"+ login +"')";
+		String sql = "select * from usuario where upper(login) = upper('" + login + "')";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		ResultSet resultado = statement.executeQuery();
@@ -52,6 +52,17 @@ public class UsuarioRepository {
 		}
 
 		return usuario;
+	}
+
+	public boolean validarLogin(String login) throws SQLException {
+		String sql = "select count(1) > 0 as existe from usuario where upper(login) = upper('" + login + "')";
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		ResultSet resultado = statement.executeQuery();
+		resultado.next();
+
+		return resultado.getBoolean("existe");
+
 	}
 
 }
