@@ -26,7 +26,7 @@
 								<div class="page-wrapper">
 									<div class="page-body">
 										<div class="row">
-
+											<span>${msg}</span>
 											<div class="col-sm-12">
 												<div class="card">
 													<div class="card-header">
@@ -35,14 +35,15 @@
 													<div class="card-block">
 														<h4 class="sub-title">Basic Inputs</h4>
 														<form class="form-material"
-															action="<%= request.getContextPath() %>/ServletUsuario"
+															action="<%=request.getContextPath()%>/ServletUsuario"
 															method="post">
 															<div class="form-group row">
 																<div class="col-sm-1">
 																	<div class="form-group form-default">
-																		<input type="text" name="id" id="id" value="${usuarioSalvo.id}"
-																			class="form-control" disabled> <span
-																			class="form-bar"></span> <label class="float-label">ID</label>
+																		<input type="text" name="id" id="id"
+																			value="${usuarioSalvo.id}" class="form-control"
+																			disabled> <span class="form-bar"></span> <label
+																			class="float-label">ID</label>
 																	</div>
 
 																</div>
@@ -50,9 +51,10 @@
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
-																		<input type="text" name="nome" id="nome" value="${usuarioSalvo.nome}"
-																			class="form-control" required> <span
-																			class="form-bar"></span> <label class="float-label">Nome</label>
+																		<input type="text" name="nome" id="nome"
+																			value="${usuarioSalvo.nome}" class="form-control"
+																			required> <span class="form-bar"></span> <label
+																			class="float-label">Nome</label>
 																	</div>
 																</div>
 															</div>
@@ -61,9 +63,10 @@
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
-																		<input type="email" name="email" id="email" value="${usuarioSalvo.email}"
-																			class="form-control" required> <span
-																			class="form-bar"></span> <label class="float-label">Email</label>
+																		<input type="email" name="email" id="email"
+																			value="${usuarioSalvo.email}" class="form-control"
+																			required> <span class="form-bar"></span> <label
+																			class="float-label">Email</label>
 																	</div>
 
 																</div>
@@ -72,9 +75,10 @@
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
-																		<input type="text" name="login" id="login" value="${usuarioSalvo.login}"
-																			class="form-control" required> <span
-																			class="form-bar"></span> <label class="float-label">Login</label>
+																		<input type="text" name="login" id="login"
+																			value="${usuarioSalvo.login}" class="form-control"
+																			required> <span class="form-bar"></span> <label
+																			class="float-label">Login</label>
 																	</div>
 
 																</div>
@@ -82,9 +86,10 @@
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
-																		<input type="text" name="senha" id="senha" value="${usuarioSalvo.senha}"
-																			class="form-control" required> <span
-																			class="form-bar"></span> <label class="float-label">Senha</label>
+																		<input type="text" name="senha" id="senha"
+																			value="${usuarioSalvo.senha}" class="form-control"
+																			required> <span class="form-bar"></span> <label
+																			class="float-label">Senha</label>
 																	</div>
 																</div>
 															</div>

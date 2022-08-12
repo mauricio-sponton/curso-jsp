@@ -18,7 +18,7 @@ public class LoginRepository {
 	
 	public boolean validarAutenticacao(Usuario login) throws SQLException {
 		
-		String sql = "select * from login where login = ? and senha = ?";
+		String sql = "select * from usuario where login = ? and senha = ?";
 		
 		PreparedStatement statement = connection.prepareStatement(sql);
 		
@@ -30,6 +30,7 @@ public class LoginRepository {
 		if(resultSet.next()) {
 			return true;
 		}
+		
 		
 		return false;
 	}
