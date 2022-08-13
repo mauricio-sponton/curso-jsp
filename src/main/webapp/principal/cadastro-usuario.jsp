@@ -95,9 +95,15 @@
 															</div>
 
 
-															<button class="btn waves-effect waves-light btn-primary" onclick="limparForm();" type="button">Novo</button>
+															<button class="btn waves-effect waves-light btn-primary"
+																onclick="limparForm();" type="button">Novo</button>
 															<button class="btn waves-effect waves-light btn-success">Salvar</button>
-															<button class="btn waves-effect waves-light btn-danger" type="button" onclick="deletarAjax();">Excluir</button>
+															<button class="btn waves-effect waves-light btn-danger"
+																type="button" onclick="deletarAjax();">Excluir</button>
+
+															<button type="button" class="btn btn-secondary"
+																data-toggle="modal" data-target="#modalPesquisarUsuario">
+																Pesquisar</button>
 
 														</form>
 													</div>
@@ -119,48 +125,100 @@
 	</div>
 
 
+	<div class="modal fade" id="modalPesquisarUsuario" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Pesquisar
+						usuário</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="input-group mb-3">
+						<input type="text" class="form-control"
+							placeholder="Recipient's username" aria-label="Digite um nome..." id="nomeBusca"
+							aria-describedby="basic-addon2">
+						<div class="input-group-append">
+							<button class="btn btn-success" type="button" onclick="buscarUsuario();">Buscar</button>
+						</div>
+					</div>
+
+					<table class="table">
+						<thead>
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">Nome</th>
+								<th scope="col">Ver</th>
+							</tr>
+						</thead>
+						<tbody>
+						
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal">Fechar</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<jsp:include page="javascript.jsp"></jsp:include>
 	<script type="text/javascript">
 	
-		function deletarAjax(){
-			if(confirm('Deseja excluir os dados?')){
-				var urlAction = document.getElementById('formUsuario').action;
-				var idUsuario = document.getElementById('id').value;
-				
-				$.ajax({
-					
-					method: "get",
-					url: urlAction,
-					data: "id=" + idUsuario + "&acao=deletar-ajax",
-					success: function(response){
-						limparForm();
-						document.getElementById('msg').textContent = response;
-					}
-					
-				}).fail(function(xhr, status, erroThrow){
-					console.log('Erro ao deletar usuário de ID: ' + xhr.responseText);
-				});
+		function buscarUsuario(){
+			var nomeBusca = document.getElementById('nomeBusca').value;
+			
+			if(nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != ''){
+				alert(nomeBusca)
 			}
 		}
 	
-		function deletar(){
-			
-			if(confirm('Deseja excluir os dados?')){
+		function deletarAjax() {
+			if (confirm('Deseja excluir os dados?')) {
+				var urlAction = document.getElementById('formUsuario').action;
+				var idUsuario = document.getElementById('id').value;
+
+				$.ajax({
+
+					method : "get",
+					url : urlAction,
+					data : "id=" + idUsuario + "&acao=deletar-ajax",
+					success : function(response) {
+						limparForm();
+						document.getElementById('msg').textContent = response;
+					}
+
+				}).fail(
+						function(xhr, status, erroThrow) {
+							console.log('Erro ao deletar usuário de ID: '
+									+ xhr.responseText);
+						});
+			}
+		}
+
+		function deletar() {
+
+			if (confirm('Deseja excluir os dados?')) {
 				document.getElementById('formUsuario').method = 'get';
 				document.getElementById('acao').value = 'deletar';
 				document.getElementById('formUsuario').submit();
 			}
-			
+
 		}
-		
+
 		function limparForm() {
 			var form = document.getElementById('formUsuario').elements;
-			
-			for(var i=0; i < form.length; i++){
+
+			for (var i = 0; i < form.length; i++) {
 				form[i].value = '';
 			}
 		}
-	
 	</script>
 </body>
 
