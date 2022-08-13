@@ -36,6 +36,7 @@
 														<form class="form-material" id="formUsuario"
 															action="<%=request.getContextPath()%>/ServletUsuario"
 															method="post">
+															<input type="hidden" name="acao" id="acao">
 															<div class="form-group row">
 																<div class="col-sm-1">
 																	<div class="form-group form-default form-static-label">
@@ -94,9 +95,9 @@
 															</div>
 
 
-															<button class="btn waves-effect waves-light btn-primary" onclick="limparForm();">Novo</button>
+															<button class="btn waves-effect waves-light btn-primary" onclick="limparForm();" type="button">Novo</button>
 															<button class="btn waves-effect waves-light btn-success">Salvar</button>
-															<button class="btn waves-effect waves-light btn-danger">Excluir</button>
+															<button class="btn waves-effect waves-light btn-danger" type="button" onclick="deletar();">Excluir</button>
 
 														</form>
 													</div>
@@ -120,6 +121,16 @@
 
 	<jsp:include page="javascript.jsp"></jsp:include>
 	<script type="text/javascript">
+	
+		function deletar(){
+			
+			if(confirm('Deseja excluir os dados?')){
+				document.getElementById('formUsuario').method = 'get';
+				document.getElementById('acao').value = 'deletar';
+				document.getElementById('formUsuario').submit();
+			}
+			
+		}
 		
 		function limparForm() {
 			var form = document.getElementById('formUsuario').elements;

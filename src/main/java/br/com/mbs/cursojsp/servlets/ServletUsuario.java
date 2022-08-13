@@ -20,15 +20,34 @@ public class ServletUsuario extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		try {
+			String acao = request.getParameter("acao");
+
+			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar")) {
+				String idUsuario = request.getParameter("id");
+
+				usuarioRepository.deletar(idUsuario);
+				request.setAttribute("msg", "Usuário excluido com sucesso!");
+			}
+			
+			request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			RequestDispatcher redirecionar = request.getRequestDispatcher("/erro.jsp");
+			request.setAttribute("msg", e.getMessage());
+			redirecionar.forward(request, response);
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		try {
-			
+
 			String msg = "Operação realizada com sucesso!";
-			
+
 			String id = request.getParameter("id");
 			String nome = request.getParameter("nome");
 			String email = request.getParameter("email");
@@ -42,14 +61,12 @@ public class ServletUsuario extends HttpServlet {
 			usuario.setEmail(email);
 			usuario.setLogin(login);
 			usuario.setSenha(senha);
-			
-			
-			if(usuarioRepository.validarLogin(usuario.getLogin()) && usuario.getId() == null) {
+
+			if (usuarioRepository.validarLogin(usuario.getLogin()) && usuario.getId() == null) {
 				msg = "Já existe usuário com esse login!";
-			}else {
+			} else {
 				usuario = usuarioRepository.salvar(usuario);
 			}
-
 
 			request.setAttribute("msg", msg);
 			request.setAttribute("usuarioSalvo", usuario);

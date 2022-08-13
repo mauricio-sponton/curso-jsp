@@ -80,5 +80,16 @@ public class UsuarioRepository {
 		return resultado.getBoolean("existe");
 
 	}
+	
+	public void deletar(String idUsuario) throws SQLException {
+		String sql = "delete from usuario where id = ?";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setLong(1, Long.parseLong(idUsuario));
+		
+		statement.executeUpdate();
+		connection.commit();
+		
+	}
 
 }
