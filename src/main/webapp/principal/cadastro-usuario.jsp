@@ -26,7 +26,7 @@
 								<div class="page-wrapper">
 									<div class="page-body">
 										<div class="row">
-											<span>${msg}</span>
+											<span id="msg">${msg}</span>
 											<div class="col-sm-12">
 												<div class="card">
 													<div class="card-header">
@@ -97,7 +97,7 @@
 
 															<button class="btn waves-effect waves-light btn-primary" onclick="limparForm();" type="button">Novo</button>
 															<button class="btn waves-effect waves-light btn-success">Salvar</button>
-															<button class="btn waves-effect waves-light btn-danger" type="button" onclick="deletar();">Excluir</button>
+															<button class="btn waves-effect waves-light btn-danger" type="button" onclick="deletarAjax();">Excluir</button>
 
 														</form>
 													</div>
@@ -121,6 +121,27 @@
 
 	<jsp:include page="javascript.jsp"></jsp:include>
 	<script type="text/javascript">
+	
+		function deletarAjax(){
+			if(confirm('Deseja excluir os dados?')){
+				var urlAction = document.getElementById('formUsuario').action;
+				var idUsuario = document.getElementById('id').value;
+				
+				$.ajax({
+					
+					method: "get",
+					url: urlAction,
+					data: "id=" + idUsuario + "&acao=deletar-ajax",
+					success: function(response){
+						limparForm();
+						document.getElementById('msg').textContent = response;
+					}
+					
+				}).fail(function(xhr, status, erroThrow){
+					console.log('Erro ao deletar usuário de ID: ' + xhr.responseText);
+				});
+			}
+		}
 	
 		function deletar(){
 			
