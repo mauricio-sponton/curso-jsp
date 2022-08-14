@@ -55,7 +55,7 @@ public class UsuarioRepository {
 
 		List<Usuario> lista = new ArrayList<Usuario>();
 
-		String sql = "select * from usuario";
+		String sql = "select * from usuario where adm is false";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		ResultSet resultado = statement.executeQuery();
@@ -77,7 +77,7 @@ public class UsuarioRepository {
 
 		List<Usuario> lista = new ArrayList<Usuario>();
 
-		String sql = "select * from usuario where upper(nome) like upper(?) order by id";
+		String sql = "select * from usuario where upper(nome) like upper(?) and adm is false order by id";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		statement.setString(1, "%" + nome + "%");
@@ -99,7 +99,7 @@ public class UsuarioRepository {
 
 	public Usuario buscarPorLogin(String login) throws SQLException {
 
-		String sql = "select * from usuario where upper(login) = upper('" + login + "')";
+		String sql = "select * from usuario where upper(login) = upper('" + login + "') and adm is false";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		ResultSet resultado = statement.executeQuery();
@@ -120,7 +120,7 @@ public class UsuarioRepository {
 
 	public Usuario buscarPorId(String id) throws SQLException {
 
-		String sql = "select * from usuario where id = ?";
+		String sql = "select * from usuario where id = ? and adm is false";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setLong(1, Long.parseLong(id));
 
@@ -152,7 +152,7 @@ public class UsuarioRepository {
 	}
 
 	public void deletar(String idUsuario) throws SQLException {
-		String sql = "delete from usuario where id = ?";
+		String sql = "delete from usuario where id = ? and adm is false";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		statement.setLong(1, Long.parseLong(idUsuario));
