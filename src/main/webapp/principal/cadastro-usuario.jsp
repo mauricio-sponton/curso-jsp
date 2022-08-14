@@ -140,27 +140,31 @@
 				<div class="modal-body">
 					<div class="input-group mb-3">
 						<input type="text" class="form-control"
-							placeholder="Recipient's username" aria-label="Digite um nome..." id="nomeBusca"
-							aria-describedby="basic-addon2">
+							placeholder="Recipient's username" aria-label="Digite um nome..."
+							id="nomeBusca" aria-describedby="basic-addon2">
 						<div class="input-group-append">
-							<button class="btn btn-success" type="button" onclick="buscarUsuario();">Buscar</button>
+							<button class="btn btn-success" type="button"
+								onclick="buscarUsuario();">Buscar</button>
 						</div>
 					</div>
+					<div style="overflow-y: scroll; height: 300px">
+						<table class="table" id="tabela-usuario">
+							<thead>
+								<tr>
+									<th scope="col">ID</th>
+									<th scope="col">Nome</th>
+									<th scope="col">Ver</th>
+								</tr>
+							</thead>
+							<tbody>
 
-					<table class="table">
-						<thead>
-							<tr>
-								<th scope="col">ID</th>
-								<th scope="col">Nome</th>
-								<th scope="col">Ver</th>
-							</tr>
-						</thead>
-						<tbody>
+							</tbody>
+						</table>
 						
-						</tbody>
-					</table>
+					</div>
 				</div>
-				<div class="modal-footer">
+				<div class="modal-footer" style="display:flex; justify-content: space-between;">
+				<span id="totalUsuarios"></span>
 					<button type="button" class="btn btn-secondary"
 						data-dismiss="modal">Fechar</button>
 				</div>
@@ -170,29 +174,47 @@
 
 	<jsp:include page="javascript.jsp"></jsp:include>
 	<script type="text/javascript">
-	
-		function buscarUsuario(){
+		function buscarUsuario() {
 			var nomeBusca = document.getElementById('nomeBusca').value;
 			var urlAction = document.getElementById('formUsuario').action;
-			
-			if(nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != ''){
-				$.ajax({
 
-					method : "get",
-					url : urlAction,
-					data : "nomeBusca=" + nomeBusca + "&acao=buscarUsuario",
-					success : function(response) {
-						
-					}
+			if (nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != '') {
+				$
+						.ajax(
+								{
 
-				}).fail(
-						function(xhr, status, erroThrow) {
-							console.log('Erro ao buscar usuário: '
-									+ xhr.responseText);
-				});
+									method : "get",
+									url : urlAction,
+									data : "nomeBusca=" + nomeBusca
+											+ "&acao=buscarUsuario",
+									success : function(response) {
+
+										var json = JSON.parse(response);
+
+										$('#tabela-usuario > tbody > tr')
+												.remove();
+
+										for (var i = 0; i < json.length; i++) {
+											$('#tabela-usuario > tbody')
+													.append(
+															'<tr><td>'
+																	+ json[i].id
+																	+ '</td><td>'
+																	+ json[i].nome
+																	+ '</td><td><button type="button" class="btn btn-info">Visualizar</button></td></tr>');
+										}
+										
+										$('#totalUsuarios').text('Total de usuários encontrados: ' + json.length);
+									}
+
+								}).fail(
+								function(xhr, status, erroThrow) {
+									console.log('Erro ao buscar usuário: '
+											+ xhr.responseText);
+								});
 			}
 		}
-	
+
 		function deletarAjax() {
 			if (confirm('Deseja excluir os dados?')) {
 				var urlAction = document.getElementById('formUsuario').action;
@@ -212,7 +234,7 @@
 						function(xhr, status, erroThrow) {
 							console.log('Erro ao deletar usuário de ID: '
 									+ xhr.responseText);
-				});
+						});
 			}
 		}
 
