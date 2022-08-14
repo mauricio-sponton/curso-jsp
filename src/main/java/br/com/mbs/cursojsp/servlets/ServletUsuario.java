@@ -1,6 +1,9 @@
 package br.com.mbs.cursojsp.servlets;
 
 import java.io.IOException;
+import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.mbs.cursojsp.dao.UsuarioRepository;
 import br.com.mbs.cursojsp.model.Usuario;
@@ -37,7 +40,20 @@ public class ServletUsuario extends HttpServlet {
 				usuarioRepository.deletar(idUsuario);
 				response.getWriter().write("Excluído com sucesso");
 			
-			}else {
+			}
+			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUsuario")) {
+				String nomeBusca = request.getParameter("nomeBusca");
+				List<Usuario> lista = usuarioRepository.conultarUsuariosPorNome(nomeBusca);
+				
+				ObjectMapper mapper = new ObjectMapper();
+				String json = mapper.writeValueAsString(lista);
+				response.getWriter().write(json);
+				
+			
+			}
+			
+			else {
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
 			}
 			

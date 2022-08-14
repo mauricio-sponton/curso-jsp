@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.mbs.cursojsp.connection.SingleConnection;
 import br.com.mbs.cursojsp.model.Usuario;
@@ -47,6 +49,30 @@ public class UsuarioRepository {
 		}
 
 		return this.buscarPorLogin(usuario.getLogin());
+	}
+	
+	public List<Usuario> conultarUsuariosPorNome(String nome) throws SQLException{
+		
+		List<Usuario> lista = new ArrayList<Usuario>();
+		
+		String sql = "select * from usuario where upper(nome) like upper(?)";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setString(1, "%"+ nome +"%");
+		
+		ResultSet resultado = statement.executeQuery();
+		
+		while(resultado.next()) {
+			Usuario usuario = new Usuario();
+			usuario.setId(resultado.getLong("id"));
+			usuario.setNome(resultado.getString("nome"));
+			usuario.setEmail(resultado.getString("email"));
+			usuario.setLogin(resultado.getString("login"));
+			
+			lista.add(usuario);
+		}
+		
+		return lista;
 	}
 
 	public Usuario buscarPorLogin(String login) throws SQLException {

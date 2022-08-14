@@ -173,9 +173,23 @@
 	
 		function buscarUsuario(){
 			var nomeBusca = document.getElementById('nomeBusca').value;
+			var urlAction = document.getElementById('formUsuario').action;
 			
 			if(nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != ''){
-				alert(nomeBusca)
+				$.ajax({
+
+					method : "get",
+					url : urlAction,
+					data : "nomeBusca=" + nomeBusca + "&acao=buscarUsuario",
+					success : function(response) {
+						
+					}
+
+				}).fail(
+						function(xhr, status, erroThrow) {
+							console.log('Erro ao buscar usuário: '
+									+ xhr.responseText);
+				});
 			}
 		}
 	
@@ -198,7 +212,7 @@
 						function(xhr, status, erroThrow) {
 							console.log('Erro ao deletar usuário de ID: '
 									+ xhr.responseText);
-						});
+				});
 			}
 		}
 
