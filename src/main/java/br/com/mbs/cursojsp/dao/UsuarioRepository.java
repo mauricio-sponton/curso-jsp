@@ -55,7 +55,7 @@ public class UsuarioRepository {
 		
 		List<Usuario> lista = new ArrayList<Usuario>();
 		
-		String sql = "select * from usuario where upper(nome) like upper(?)";
+		String sql = "select * from usuario where upper(nome) like upper(?) order by id";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		
 		statement.setString(1, "%"+ nome +"%");
@@ -79,6 +79,28 @@ public class UsuarioRepository {
 
 		String sql = "select * from usuario where upper(login) = upper('" + login + "')";
 		PreparedStatement statement = connection.prepareStatement(sql);
+
+		ResultSet resultado = statement.executeQuery();
+
+		Usuario usuario = new Usuario();
+
+		while (resultado.next()) {
+
+			usuario.setId(resultado.getLong("id"));
+			usuario.setNome(resultado.getString("nome"));
+			usuario.setEmail(resultado.getString("email"));
+			usuario.setLogin(resultado.getString("login"));
+			usuario.setSenha(resultado.getString("senha"));
+		}
+
+		return usuario;
+	}
+	
+	public Usuario buscarPorId(String id) throws SQLException {
+
+		String sql = "select * from usuario where id = ?";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setLong(1, Long.parseLong(id));
 
 		ResultSet resultado = statement.executeQuery();
 

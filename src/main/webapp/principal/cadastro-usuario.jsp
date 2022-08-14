@@ -201,7 +201,7 @@
 																	+ json[i].id
 																	+ '</td><td>'
 																	+ json[i].nome
-																	+ '</td><td><button type="button" class="btn btn-info">Visualizar</button></td></tr>');
+																	+ '</td><td><button type="button" class="btn btn-info" onclick="editar('+ json[i].id +');">Visualizar</button></td></tr>');
 										}
 										
 										$('#totalUsuarios').text('Total de usuários encontrados: ' + json.length);
@@ -213,6 +213,13 @@
 											+ xhr.responseText);
 								});
 			}
+		}
+		
+		function editar(id){
+			var urlAction = document.getElementById('formUsuario').action;
+			
+			window.location.href = urlAction + '?acao=editar&id=' + id;
+			
 		}
 
 		function deletarAjax() {

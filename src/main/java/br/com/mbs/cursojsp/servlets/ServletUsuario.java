@@ -53,6 +53,19 @@ public class ServletUsuario extends HttpServlet {
 			
 			}
 			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("editar")) {
+				String id = request.getParameter("id");
+				
+				Usuario usuario = usuarioRepository.buscarPorId(id);
+				
+				request.setAttribute("msg", "Atualize as informações clicando em salvar");
+				request.setAttribute("usuarioSalvo", usuario);
+
+				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
+				
+			
+			}
+			
 			else {
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
 			}
