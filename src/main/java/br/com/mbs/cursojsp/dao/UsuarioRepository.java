@@ -33,9 +33,9 @@ public class UsuarioRepository {
 			statement.execute();
 
 			connection.commit();
-		}else {
+		} else {
 
-			String sql = "update usuario set login=?, senha=?, nome=?, email=? where id= "+ usuario.getId() +"";
+			String sql = "update usuario set login=?, senha=?, nome=?, email=? where id= " + usuario.getId() + "";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, usuario.getLogin());
@@ -50,28 +50,50 @@ public class UsuarioRepository {
 
 		return this.buscarPorLogin(usuario.getLogin());
 	}
-	
-	public List<Usuario> conultarUsuariosPorNome(String nome) throws SQLException{
-		
+
+	public List<Usuario> listarUsuarios() throws SQLException {
+
 		List<Usuario> lista = new ArrayList<Usuario>();
-		
-		String sql = "select * from usuario where upper(nome) like upper(?) order by id";
+
+		String sql = "select * from usuario";
 		PreparedStatement statement = connection.prepareStatement(sql);
-		
-		statement.setString(1, "%"+ nome +"%");
-		
+
 		ResultSet resultado = statement.executeQuery();
-		
-		while(resultado.next()) {
+
+		while (resultado.next()) {
 			Usuario usuario = new Usuario();
 			usuario.setId(resultado.getLong("id"));
 			usuario.setNome(resultado.getString("nome"));
 			usuario.setEmail(resultado.getString("email"));
 			usuario.setLogin(resultado.getString("login"));
-			
+
 			lista.add(usuario);
 		}
-		
+
+		return lista;
+	}
+
+	public List<Usuario> conultarUsuariosPorNome(String nome) throws SQLException {
+
+		List<Usuario> lista = new ArrayList<Usuario>();
+
+		String sql = "select * from usuario where upper(nome) like upper(?) order by id";
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		statement.setString(1, "%" + nome + "%");
+
+		ResultSet resultado = statement.executeQuery();
+
+		while (resultado.next()) {
+			Usuario usuario = new Usuario();
+			usuario.setId(resultado.getLong("id"));
+			usuario.setNome(resultado.getString("nome"));
+			usuario.setEmail(resultado.getString("email"));
+			usuario.setLogin(resultado.getString("login"));
+
+			lista.add(usuario);
+		}
+
 		return lista;
 	}
 
@@ -95,7 +117,7 @@ public class UsuarioRepository {
 
 		return usuario;
 	}
-	
+
 	public Usuario buscarPorId(String id) throws SQLException {
 
 		String sql = "select * from usuario where id = ?";
@@ -128,16 +150,16 @@ public class UsuarioRepository {
 		return resultado.getBoolean("existe");
 
 	}
-	
+
 	public void deletar(String idUsuario) throws SQLException {
 		String sql = "delete from usuario where id = ?";
 		PreparedStatement statement = connection.prepareStatement(sql);
-		
+
 		statement.setLong(1, Long.parseLong(idUsuario));
-		
+
 		statement.executeUpdate();
 		connection.commit();
-		
+
 	}
 
 }

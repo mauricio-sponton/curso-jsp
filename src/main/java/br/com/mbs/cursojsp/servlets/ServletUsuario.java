@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+
 public class ServletUsuario extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -61,6 +62,17 @@ public class ServletUsuario extends HttpServlet {
 				request.setAttribute("msg", "Atualize as informações clicando em salvar");
 				request.setAttribute("usuarioSalvo", usuario);
 
+				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
+				
+			
+			}
+			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listar")) {
+				
+				List<Usuario> lista = usuarioRepository.listarUsuarios();
+				
+				request.setAttribute("lista", lista);
+				
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
 				
 			

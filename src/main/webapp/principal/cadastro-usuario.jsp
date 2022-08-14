@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -106,163 +108,201 @@
 																Pesquisar</button>
 
 														</form>
+														
 													</div>
+													
+													
 												</div>
+												
+												<div style="overflow-y: scroll; height: 600px">
+												<table class="table" id="lista-usuario">
+													<thead>
+														<tr>
+															<th scope="col">ID</th>
+															<th scope="col">Nome</th>
+															<th scope="col">Email</th>
+															<th scope="col">Ver</th>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach items="${lista}" var="u">
+															<tr>
+																<td><c:out value="${u.id}"></c:out></td>
+																<td><c:out value="${u.nome}"></c:out></td>
+																<td><c:out value="${u.email}"></c:out></td>
+																<td><a class="btn btn-success" href="<%= request.getContextPath() %>/ServletUsuario?acao=editar&id=${u.id}">Visualizar</a></td>
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+
+
+											</div>
 											</div>
 
-
-
+											
 										</div>
 									</div>
+									<div id="styleSelector"></div>
 								</div>
-								<div id="styleSelector"></div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 
 
-	<div class="modal fade" id="modalPesquisarUsuario" tabindex="-1"
-		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Pesquisar
-						usuário</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="input-group mb-3">
-						<input type="text" class="form-control"
-							placeholder="Recipient's username" aria-label="Digite um nome..."
-							id="nomeBusca" aria-describedby="basic-addon2">
-						<div class="input-group-append">
-							<button class="btn btn-success" type="button"
-								onclick="buscarUsuario();">Buscar</button>
+		<div class="modal fade" id="modalPesquisarUsuario" tabindex="-1"
+			role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Pesquisar
+							usuário</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="input-group mb-3">
+							<input type="text" class="form-control"
+								placeholder="Recipient's username"
+								aria-label="Digite um nome..." id="nomeBusca"
+								aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-success" type="button"
+									onclick="buscarUsuario();">Buscar</button>
+							</div>
+						</div>
+						<div style="overflow-y: scroll; height: 300px">
+							<table class="table" id="tabela-usuario">
+								<thead>
+									<tr>
+										<th scope="col">ID</th>
+										<th scope="col">Nome</th>
+										<th scope="col">Ver</th>
+									</tr>
+								</thead>
+								<tbody>
+
+								</tbody>
+							</table>
+
 						</div>
 					</div>
-					<div style="overflow-y: scroll; height: 300px">
-						<table class="table" id="tabela-usuario">
-							<thead>
-								<tr>
-									<th scope="col">ID</th>
-									<th scope="col">Nome</th>
-									<th scope="col">Ver</th>
-								</tr>
-							</thead>
-							<tbody>
-
-							</tbody>
-						</table>
-						
+					<div class="modal-footer"
+						style="display: flex; justify-content: space-between;">
+						<span id="totalUsuarios"></span>
+						<button type="button" class="btn btn-secondary"
+							data-dismiss="modal">Fechar</button>
 					</div>
-				</div>
-				<div class="modal-footer" style="display:flex; justify-content: space-between;">
-				<span id="totalUsuarios"></span>
-					<button type="button" class="btn btn-secondary"
-						data-dismiss="modal">Fechar</button>
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<jsp:include page="javascript.jsp"></jsp:include>
-	<script type="text/javascript">
-		function buscarUsuario() {
-			var nomeBusca = document.getElementById('nomeBusca').value;
-			var urlAction = document.getElementById('formUsuario').action;
-
-			if (nomeBusca != null && nomeBusca != '' && nomeBusca.trim() != '') {
-				$
-						.ajax(
-								{
-
-									method : "get",
-									url : urlAction,
-									data : "nomeBusca=" + nomeBusca
-											+ "&acao=buscarUsuario",
-									success : function(response) {
-
-										var json = JSON.parse(response);
-
-										$('#tabela-usuario > tbody > tr')
-												.remove();
-
-										for (var i = 0; i < json.length; i++) {
-											$('#tabela-usuario > tbody')
-													.append(
-															'<tr><td>'
-																	+ json[i].id
-																	+ '</td><td>'
-																	+ json[i].nome
-																	+ '</td><td><button type="button" class="btn btn-info" onclick="editar('+ json[i].id +');">Visualizar</button></td></tr>');
-										}
-										
-										$('#totalUsuarios').text('Total de usuários encontrados: ' + json.length);
-									}
-
-								}).fail(
-								function(xhr, status, erroThrow) {
-									console.log('Erro ao buscar usuário: '
-											+ xhr.responseText);
-								});
-			}
-		}
-		
-		function editar(id){
-			var urlAction = document.getElementById('formUsuario').action;
-			
-			window.location.href = urlAction + '?acao=editar&id=' + id;
-			
-		}
-
-		function deletarAjax() {
-			if (confirm('Deseja excluir os dados?')) {
+		<jsp:include page="javascript.jsp"></jsp:include>
+		<script type="text/javascript">
+			function buscarUsuario() {
+				var nomeBusca = document.getElementById('nomeBusca').value;
 				var urlAction = document.getElementById('formUsuario').action;
-				var idUsuario = document.getElementById('id').value;
 
-				$.ajax({
+				if (nomeBusca != null && nomeBusca != ''
+						&& nomeBusca.trim() != '') {
+					$
+							.ajax(
+									{
 
-					method : "get",
-					url : urlAction,
-					data : "id=" + idUsuario + "&acao=deletar-ajax",
-					success : function(response) {
-						limparForm();
-						document.getElementById('msg').textContent = response;
-					}
+										method : "get",
+										url : urlAction,
+										data : "nomeBusca=" + nomeBusca
+												+ "&acao=buscarUsuario",
+										success : function(response) {
 
-				}).fail(
-						function(xhr, status, erroThrow) {
-							console.log('Erro ao deletar usuário de ID: '
-									+ xhr.responseText);
-						});
+											var json = JSON.parse(response);
+
+											$('#tabela-usuario > tbody > tr')
+													.remove();
+
+											for (var i = 0; i < json.length; i++) {
+												$('#tabela-usuario > tbody')
+														.append(
+																'<tr><td>'
+																		+ json[i].id
+																		+ '</td><td>'
+																		+ json[i].nome
+																		+ '</td><td><button type="button" class="btn btn-info" onclick="editar('
+																		+ json[i].id
+																		+ ');">Visualizar</button></td></tr>');
+											}
+
+											$('#totalUsuarios').text(
+													'Total de usuários encontrados: '
+															+ json.length);
+										}
+
+									}).fail(
+									function(xhr, status, erroThrow) {
+										console.log('Erro ao buscar usuário: '
+												+ xhr.responseText);
+									});
+				}
 			}
-		}
 
-		function deletar() {
+			function editar(id) {
+				var urlAction = document.getElementById('formUsuario').action;
 
-			if (confirm('Deseja excluir os dados?')) {
-				document.getElementById('formUsuario').method = 'get';
-				document.getElementById('acao').value = 'deletar';
-				document.getElementById('formUsuario').submit();
+				window.location.href = urlAction + '?acao=editar&id=' + id;
+
 			}
 
-		}
+			function deletarAjax() {
+				if (confirm('Deseja excluir os dados?')) {
+					var urlAction = document.getElementById('formUsuario').action;
+					var idUsuario = document.getElementById('id').value;
 
-		function limparForm() {
-			var form = document.getElementById('formUsuario').elements;
+					$
+							.ajax(
+									{
 
-			for (var i = 0; i < form.length; i++) {
-				form[i].value = '';
+										method : "get",
+										url : urlAction,
+										data : "id=" + idUsuario
+												+ "&acao=deletar-ajax",
+										success : function(response) {
+											limparForm();
+											document.getElementById('msg').textContent = response;
+										}
+
+									})
+							.fail(
+									function(xhr, status, erroThrow) {
+										console
+												.log('Erro ao deletar usuário de ID: '
+														+ xhr.responseText);
+									});
+				}
 			}
-		}
-	</script>
+
+			function deletar() {
+
+				if (confirm('Deseja excluir os dados?')) {
+					document.getElementById('formUsuario').method = 'get';
+					document.getElementById('acao').value = 'deletar';
+					document.getElementById('formUsuario').submit();
+				}
+
+			}
+
+			function limparForm() {
+				var form = document.getElementById('formUsuario').elements;
+
+				for (var i = 0; i < form.length; i++) {
+					form[i].value = '';
+				}
+			}
+		</script>
 </body>
 
 </html>
