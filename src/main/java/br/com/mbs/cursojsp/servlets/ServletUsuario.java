@@ -102,6 +102,7 @@ public class ServletUsuario extends ServletGenericUtil {
 			String email = request.getParameter("email");
 			String login = request.getParameter("login");
 			String senha = request.getParameter("senha");
+			String perfil = request.getParameter("perfil");
 
 			Usuario usuario = new Usuario();
 
@@ -110,6 +111,7 @@ public class ServletUsuario extends ServletGenericUtil {
 			usuario.setEmail(email);
 			usuario.setLogin(login);
 			usuario.setSenha(senha);
+			usuario.setPerfil(perfil);
 
 			if (usuarioRepository.validarLogin(usuario.getLogin()) && usuario.getId() == null) {
 				msg = "Já existe usuário com esse login!";

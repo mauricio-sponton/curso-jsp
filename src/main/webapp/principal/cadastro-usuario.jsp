@@ -95,8 +95,18 @@
 																	</div>
 																</div>
 															</div>
-
-
+															<div class="form-group row">
+																<div class="col-sm-12">
+																	<select class="form-control" name="perfil"
+																		aria-label="Default select example">
+																		<option selected disabled="disabled">Selecione
+																			o perfil</option>
+																		<option value="ADMIN">Admin</option>
+																		<option value="SECRETARIA">Secretária</option>
+																		<option value="AUXILIAR">Auxiliar</option>
+																	</select>
+																</div>
+															</div>
 															<button class="btn waves-effect waves-light btn-primary"
 																onclick="limparForm();" type="button">Novo</button>
 															<button class="btn waves-effect waves-light btn-success">Salvar</button>
@@ -108,39 +118,40 @@
 																Pesquisar</button>
 
 														</form>
-														
+
 													</div>
-													
-													
+
+
 												</div>
-												
+
 												<div style="overflow-y: scroll; height: 600px">
-												<table class="table" id="lista-usuario">
-													<thead>
-														<tr>
-															<th scope="col">ID</th>
-															<th scope="col">Nome</th>
-															<th scope="col">Email</th>
-															<th scope="col">Ver</th>
-														</tr>
-													</thead>
-													<tbody>
-														<c:forEach items="${lista}" var="u">
+													<table class="table" id="lista-usuario">
+														<thead>
 															<tr>
-																<td><c:out value="${u.id}"></c:out></td>
-																<td><c:out value="${u.nome}"></c:out></td>
-																<td><c:out value="${u.email}"></c:out></td>
-																<td><a class="btn btn-success" href="<%= request.getContextPath() %>/ServletUsuario?acao=editar&id=${u.id}">Visualizar</a></td>
+																<th scope="col">ID</th>
+																<th scope="col">Nome</th>
+																<th scope="col">Email</th>
+																<th scope="col">Ver</th>
 															</tr>
-														</c:forEach>
-													</tbody>
-												</table>
+														</thead>
+														<tbody>
+															<c:forEach items="${lista}" var="u">
+																<tr>
+																	<td><c:out value="${u.id}"></c:out></td>
+																	<td><c:out value="${u.nome}"></c:out></td>
+																	<td><c:out value="${u.email}"></c:out></td>
+																	<td><a class="btn btn-success"
+																		href="<%= request.getContextPath() %>/ServletUsuario?acao=editar&id=${u.id}">Visualizar</a></td>
+																</tr>
+															</c:forEach>
+														</tbody>
+													</table>
 
 
+												</div>
 											</div>
-											</div>
 
-											
+
 										</div>
 									</div>
 									<div id="styleSelector"></div>

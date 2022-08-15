@@ -22,7 +22,7 @@ public class UsuarioRepository {
 
 		if (usuario.naoExiste()) {
 
-			String sql = "insert into usuario (login, senha, nome, email, usuario_logado_id) values (?, ?, ?, ?, ?)";
+			String sql = "insert into usuario (login, senha, nome, email, usuario_logado_id, perfil) values (?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, usuario.getLogin());
@@ -30,19 +30,21 @@ public class UsuarioRepository {
 			statement.setString(3, usuario.getNome());
 			statement.setString(4, usuario.getEmail());
 			statement.setLong(5, usuarioLogado);
+			statement.setString(6, usuario.getPerfil());
 
 			statement.execute();
 
 			connection.commit();
 		} else {
 
-			String sql = "update usuario set login=?, senha=?, nome=?, email=? where id= " + usuario.getId() + "";
+			String sql = "update usuario set login=?, senha=?, nome=?, email=?, perfil=? where id= " + usuario.getId() + "";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, usuario.getLogin());
 			statement.setString(2, usuario.getSenha());
 			statement.setString(3, usuario.getNome());
 			statement.setString(4, usuario.getEmail());
+			statement.setString(5, usuario.getPerfil());
 
 			statement.executeUpdate();
 
@@ -116,6 +118,7 @@ public class UsuarioRepository {
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setSenha(resultado.getString("senha"));
 			usuario.setAdm(resultado.getBoolean("adm"));
+			usuario.setPerfil(resultado.getString("perfil"));
 		}
 
 		return usuario;
@@ -138,6 +141,7 @@ public class UsuarioRepository {
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setSenha(resultado.getString("senha"));
 			usuario.setAdm(resultado.getBoolean("adm"));
+			usuario.setPerfil(resultado.getString("perfil"));
 		}
 
 		return usuario;

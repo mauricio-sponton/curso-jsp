@@ -55,7 +55,7 @@
 					class="pcoded-mcaret"></span>
 			</a>
 				<ul class="pcoded-submenu">
-					<c:if test="${isAdmin}">
+					<c:if test="${perfil == 'ADMIN'}">
 
 						<span><b>Logado como administrador</b></span>
 					</c:if>

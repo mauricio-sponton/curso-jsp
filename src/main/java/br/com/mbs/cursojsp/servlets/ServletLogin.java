@@ -62,7 +62,7 @@ public class ServletLogin extends HttpServlet {
 					usuario = usuarioRepository.buscarLogado(login);
 					
 					request.getSession().setAttribute("usuario", usuario.getLogin());
-					request.getSession().setAttribute("isAdmin", usuario.isAdm());
+					request.getSession().setAttribute("perfil", usuario.getPerfil());
 
 					if (url == null || url.equals("null")) {
 						url = "principal/principal.jsp";

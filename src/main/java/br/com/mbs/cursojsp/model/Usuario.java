@@ -12,6 +12,7 @@ public class Usuario implements Serializable {
 	private String login;
 	private String senha;
 	private boolean adm;
+	private String perfil;
 
 	public boolean existe() {
 		return this.id != null && this.id > 0;
@@ -19,6 +20,14 @@ public class Usuario implements Serializable {
 
 	public boolean naoExiste() {
 		return this.id == null;
+	}
+
+	public String getPerfil() {
+		return perfil;
+	}
+
+	public void setPerfil(String perfil) {
+		this.perfil = perfil;
 	}
 
 	public boolean isAdm() {
