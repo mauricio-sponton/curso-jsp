@@ -69,6 +69,7 @@ public class UsuarioRepository {
 			usuario.setNome(resultado.getString("nome"));
 			usuario.setEmail(resultado.getString("email"));
 			usuario.setLogin(resultado.getString("login"));
+			usuario.setPerfil(resultado.getString("perfil"));
 
 			lista.add(usuario);
 		}
@@ -94,6 +95,7 @@ public class UsuarioRepository {
 			usuario.setNome(resultado.getString("nome"));
 			usuario.setEmail(resultado.getString("email"));
 			usuario.setLogin(resultado.getString("login"));
+			usuario.setPerfil(resultado.getString("perfil"));
 
 			lista.add(usuario);
 		}
@@ -164,6 +166,7 @@ public class UsuarioRepository {
 			usuario.setEmail(resultado.getString("email"));
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setSenha(resultado.getString("senha"));
+			usuario.setPerfil(resultado.getString("perfil"));
 		}
 
 		return usuario;
@@ -187,6 +190,7 @@ public class UsuarioRepository {
 			usuario.setEmail(resultado.getString("email"));
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setSenha(resultado.getString("senha"));
+			usuario.setPerfil(resultado.getString("perfil"));
 		}
 
 		return usuario;

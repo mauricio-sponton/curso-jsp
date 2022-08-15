@@ -99,11 +99,11 @@
 																<div class="col-sm-12">
 																	<select class="form-control" name="perfil"
 																		aria-label="Default select example">
-																		<option selected disabled="disabled">Selecione
+																		<option disabled="disabled">Selecione
 																			o perfil</option>
-																		<option value="ADMIN">Admin</option>
-																		<option value="SECRETARIA">Secretária</option>
-																		<option value="AUXILIAR">Auxiliar</option>
+																		<option value="ADMIN" ${usuarioSalvo.perfil == 'ADMIN' ? 'selected' : ''}>Admin</option>
+																		<option value="SECRETARIA" ${usuarioSalvo.perfil == 'SECRETARIA' ? 'selected' : ''}>Secretária</option>
+																		<option value="AUXILIAR" ${usuarioSalvo.perfil == 'AUXILIAR' ? 'selected' : ''}>Auxiliar</option>
 																	</select>
 																</div>
 															</div>
