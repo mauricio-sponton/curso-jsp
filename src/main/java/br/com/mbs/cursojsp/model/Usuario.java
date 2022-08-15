@@ -11,13 +11,22 @@ public class Usuario implements Serializable {
 	private String email;
 	private String login;
 	private String senha;
-	
+	private boolean adm;
+
 	public boolean existe() {
 		return this.id != null && this.id > 0;
 	}
-	
+
 	public boolean naoExiste() {
 		return this.id == null;
+	}
+
+	public boolean isAdm() {
+		return adm;
+	}
+
+	public void setAdm(boolean adm) {
+		this.adm = adm;
 	}
 
 	public String getLogin() {

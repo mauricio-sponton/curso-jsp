@@ -3,6 +3,7 @@ package br.com.mbs.cursojsp.servlets;
 import java.io.IOException;
 
 import br.com.mbs.cursojsp.dao.LoginRepository;
+import br.com.mbs.cursojsp.dao.UsuarioRepository;
 import br.com.mbs.cursojsp.model.Usuario;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
@@ -18,6 +19,7 @@ public class ServletLogin extends HttpServlet {
 	private static final String ERRO_LOGIN = "Informe o login e senha correto!";
 
 	private LoginRepository loginRepository = new LoginRepository();
+	private UsuarioRepository usuarioRepository = new UsuarioRepository();
 
 	public ServletLogin() {
 
@@ -56,7 +58,11 @@ public class ServletLogin extends HttpServlet {
 				usuario.setSenha(senha);
 
 				if (loginRepository.validarAutenticacao(usuario)) {
+					
+					usuario = usuarioRepository.buscarLogado(login);
+					
 					request.getSession().setAttribute("usuario", usuario.getLogin());
+					request.getSession().setAttribute("isAdmin", usuario.isAdm());
 
 					if (url == null || url.equals("null")) {
 						url = "principal/principal.jsp";

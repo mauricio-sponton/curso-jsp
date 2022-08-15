@@ -115,6 +115,7 @@ public class UsuarioRepository {
 			usuario.setEmail(resultado.getString("email"));
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setSenha(resultado.getString("senha"));
+			usuario.setAdm(resultado.getBoolean("adm"));
 		}
 
 		return usuario;
@@ -136,6 +137,7 @@ public class UsuarioRepository {
 			usuario.setEmail(resultado.getString("email"));
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setSenha(resultado.getString("senha"));
+			usuario.setAdm(resultado.getBoolean("adm"));
 		}
 
 		return usuario;
