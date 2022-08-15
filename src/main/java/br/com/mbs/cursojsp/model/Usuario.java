@@ -13,6 +13,7 @@ public class Usuario implements Serializable {
 	private String senha;
 	private boolean adm;
 	private String perfil;
+	private String sexo;
 
 	public boolean existe() {
 		return this.id != null && this.id > 0;
@@ -20,6 +21,14 @@ public class Usuario implements Serializable {
 
 	public boolean naoExiste() {
 		return this.id == null;
+	}
+
+	public String getSexo() {
+		return sexo;
+	}
+
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
 	}
 
 	public String getPerfil() {

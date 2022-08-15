@@ -49,6 +49,15 @@
 																	</div>
 
 																</div>
+
+																<div class="col-sm-10">
+																	<input type="radio" name="sexo" id="masculino" value="MASCULINO" ${usuarioSalvo.sexo == 'MASCULINO' ? 'checked' : ''}>
+																	<label for="masculino">Masculino</label> <input
+																		type="radio" name="sexo" id="feminino" value="FEMININO" ${usuarioSalvo.sexo == 'FEMININO' ? 'checked' : ''}> <label
+																		for="feminino">Feminino</label>
+																</div>
+
+
 															</div>
 															<div class="form-group row">
 																<div class="col-sm-12">
@@ -99,14 +108,18 @@
 																<div class="col-sm-12">
 																	<select class="form-control" name="perfil"
 																		aria-label="Default select example">
-																		<option disabled="disabled">Selecione
-																			o perfil</option>
-																		<option value="ADMIN" ${usuarioSalvo.perfil == 'ADMIN' ? 'selected' : ''}>Admin</option>
-																		<option value="SECRETARIA" ${usuarioSalvo.perfil == 'SECRETARIA' ? 'selected' : ''}>Secretária</option>
-																		<option value="AUXILIAR" ${usuarioSalvo.perfil == 'AUXILIAR' ? 'selected' : ''}>Auxiliar</option>
+																		<option disabled="disabled">Selecione o
+																			perfil</option>
+																		<option value="ADMIN"
+																			${usuarioSalvo.perfil == 'ADMIN' ? 'selected' : ''}>Admin</option>
+																		<option value="SECRETARIA"
+																			${usuarioSalvo.perfil == 'SECRETARIA' ? 'selected' : ''}>Secretária</option>
+																		<option value="AUXILIAR"
+																			${usuarioSalvo.perfil == 'AUXILIAR' ? 'selected' : ''}>Auxiliar</option>
 																	</select>
 																</div>
 															</div>
+
 															<button class="btn waves-effect waves-light btn-primary"
 																onclick="limparForm();" type="button">Novo</button>
 															<button class="btn waves-effect waves-light btn-success">Salvar</button>

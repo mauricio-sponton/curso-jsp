@@ -22,7 +22,7 @@ public class UsuarioRepository {
 
 		if (usuario.naoExiste()) {
 
-			String sql = "insert into usuario (login, senha, nome, email, usuario_logado_id, perfil) values (?, ?, ?, ?, ?, ?)";
+			String sql = "insert into usuario (login, senha, nome, email, usuario_logado_id, perfil, sexo) values (?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, usuario.getLogin());
@@ -31,13 +31,14 @@ public class UsuarioRepository {
 			statement.setString(4, usuario.getEmail());
 			statement.setLong(5, usuarioLogado);
 			statement.setString(6, usuario.getPerfil());
+			statement.setString(7, usuario.getSexo());
 
 			statement.execute();
 
 			connection.commit();
 		} else {
 
-			String sql = "update usuario set login=?, senha=?, nome=?, email=?, perfil=? where id= " + usuario.getId() + "";
+			String sql = "update usuario set login=?, senha=?, nome=?, email=?, perfil=?, sexo=? where id= " + usuario.getId() + "";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, usuario.getLogin());
@@ -45,6 +46,7 @@ public class UsuarioRepository {
 			statement.setString(3, usuario.getNome());
 			statement.setString(4, usuario.getEmail());
 			statement.setString(5, usuario.getPerfil());
+			statement.setString(6, usuario.getSexo());
 
 			statement.executeUpdate();
 
@@ -70,6 +72,7 @@ public class UsuarioRepository {
 			usuario.setEmail(resultado.getString("email"));
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setPerfil(resultado.getString("perfil"));
+			usuario.setSexo(resultado.getString("sexo"));
 
 			lista.add(usuario);
 		}
@@ -96,6 +99,7 @@ public class UsuarioRepository {
 			usuario.setEmail(resultado.getString("email"));
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setPerfil(resultado.getString("perfil"));
+			usuario.setSexo(resultado.getString("sexo"));
 
 			lista.add(usuario);
 		}
@@ -121,6 +125,7 @@ public class UsuarioRepository {
 			usuario.setSenha(resultado.getString("senha"));
 			usuario.setAdm(resultado.getBoolean("adm"));
 			usuario.setPerfil(resultado.getString("perfil"));
+			usuario.setSexo(resultado.getString("sexo"));
 		}
 
 		return usuario;
@@ -144,6 +149,7 @@ public class UsuarioRepository {
 			usuario.setSenha(resultado.getString("senha"));
 			usuario.setAdm(resultado.getBoolean("adm"));
 			usuario.setPerfil(resultado.getString("perfil"));
+			usuario.setSexo(resultado.getString("sexo"));
 		}
 
 		return usuario;
@@ -167,6 +173,7 @@ public class UsuarioRepository {
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setSenha(resultado.getString("senha"));
 			usuario.setPerfil(resultado.getString("perfil"));
+			usuario.setSexo(resultado.getString("sexo"));
 		}
 
 		return usuario;
@@ -191,6 +198,7 @@ public class UsuarioRepository {
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setSenha(resultado.getString("senha"));
 			usuario.setPerfil(resultado.getString("perfil"));
+			usuario.setSexo(resultado.getString("sexo"));
 		}
 
 		return usuario;
