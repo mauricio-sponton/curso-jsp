@@ -18,17 +18,18 @@ public class UsuarioRepository {
 		connection = SingleConnection.getConnection();
 	}
 
-	public Usuario salvar(Usuario usuario) throws SQLException {
+	public Usuario salvar(Usuario usuario, Long usuarioLogado) throws SQLException {
 
 		if (usuario.naoExiste()) {
 
-			String sql = "insert into usuario (login, senha, nome, email) values (?, ?, ?, ?)";
+			String sql = "insert into usuario (login, senha, nome, email, usuario_logado_id) values (?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, usuario.getLogin());
 			statement.setString(2, usuario.getSenha());
 			statement.setString(3, usuario.getNome());
 			statement.setString(4, usuario.getEmail());
+			statement.setLong(5, usuarioLogado);
 
 			statement.execute();
 
@@ -48,14 +49,14 @@ public class UsuarioRepository {
 			connection.commit();
 		}
 
-		return this.buscarPorLogin(usuario.getLogin());
+		return this.buscarPorLoginEUsuarioLogado(usuario.getLogin(), usuarioLogado);
 	}
 
-	public List<Usuario> listarUsuarios() throws SQLException {
+	public List<Usuario> listarUsuarios(Long usuarioLogado) throws SQLException {
 
 		List<Usuario> lista = new ArrayList<Usuario>();
 
-		String sql = "select * from usuario where adm is false";
+		String sql = "select * from usuario where adm is false and usuario_logado_id = " + usuarioLogado;
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		ResultSet resultado = statement.executeQuery();
@@ -73,14 +74,15 @@ public class UsuarioRepository {
 		return lista;
 	}
 
-	public List<Usuario> conultarUsuariosPorNome(String nome) throws SQLException {
+	public List<Usuario> conultarUsuariosPorNome(String nome, Long usuarioLogado) throws SQLException {
 
 		List<Usuario> lista = new ArrayList<Usuario>();
 
-		String sql = "select * from usuario where upper(nome) like upper(?) and adm is false order by id";
+		String sql = "select * from usuario where upper(nome) like upper(?) and adm is false and usuario_logado_id = ? order by id";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		statement.setString(1, "%" + nome + "%");
+		statement.setLong(2, usuarioLogado);
 
 		ResultSet resultado = statement.executeQuery();
 
@@ -96,7 +98,7 @@ public class UsuarioRepository {
 
 		return lista;
 	}
-
+	
 	public Usuario buscarPorLogin(String login) throws SQLException {
 
 		String sql = "select * from usuario where upper(login) = upper('" + login + "') and adm is false";
@@ -117,12 +119,56 @@ public class UsuarioRepository {
 
 		return usuario;
 	}
+	
+	public Usuario buscarLogado(String login) throws SQLException {
 
-	public Usuario buscarPorId(String id) throws SQLException {
+		String sql = "select * from usuario where upper(login) = upper('" + login + "')";
+		PreparedStatement statement = connection.prepareStatement(sql);
 
-		String sql = "select * from usuario where id = ? and adm is false";
+		ResultSet resultado = statement.executeQuery();
+
+		Usuario usuario = new Usuario();
+
+		while (resultado.next()) {
+
+			usuario.setId(resultado.getLong("id"));
+			usuario.setNome(resultado.getString("nome"));
+			usuario.setEmail(resultado.getString("email"));
+			usuario.setLogin(resultado.getString("login"));
+			usuario.setSenha(resultado.getString("senha"));
+		}
+
+		return usuario;
+	}
+	
+
+	public Usuario buscarPorLoginEUsuarioLogado(String login, Long usuarioLogado) throws SQLException {
+
+		String sql = "select * from usuario where upper(login) = upper('" + login + "') and adm is false and usuario_logado_id = " + usuarioLogado;
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		ResultSet resultado = statement.executeQuery();
+
+		Usuario usuario = new Usuario();
+
+		while (resultado.next()) {
+
+			usuario.setId(resultado.getLong("id"));
+			usuario.setNome(resultado.getString("nome"));
+			usuario.setEmail(resultado.getString("email"));
+			usuario.setLogin(resultado.getString("login"));
+			usuario.setSenha(resultado.getString("senha"));
+		}
+
+		return usuario;
+	}
+
+	public Usuario buscarPorId(String id, Long usuarioLogado) throws SQLException {
+
+		String sql = "select * from usuario where id = ? and adm is false and usuario_logado_id = ?";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setLong(1, Long.parseLong(id));
+		statement.setLong(2, usuarioLogado);
 
 		ResultSet resultado = statement.executeQuery();
 

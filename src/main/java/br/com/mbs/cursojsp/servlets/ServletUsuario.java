@@ -9,12 +9,11 @@ import br.com.mbs.cursojsp.dao.UsuarioRepository;
 import br.com.mbs.cursojsp.model.Usuario;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
-public class ServletUsuario extends HttpServlet {
+public class ServletUsuario extends ServletGenericUtil {
 	private static final long serialVersionUID = 1L;
 
 	private UsuarioRepository usuarioRepository = new UsuarioRepository();
@@ -45,7 +44,7 @@ public class ServletUsuario extends HttpServlet {
 			
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUsuario")) {
 				String nomeBusca = request.getParameter("nomeBusca");
-				List<Usuario> lista = usuarioRepository.conultarUsuariosPorNome(nomeBusca);
+				List<Usuario> lista = usuarioRepository.conultarUsuariosPorNome(nomeBusca, super.getUsuarioLogado(request));
 				
 				ObjectMapper mapper = new ObjectMapper();
 				String json = mapper.writeValueAsString(lista);
@@ -57,7 +56,7 @@ public class ServletUsuario extends HttpServlet {
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("editar")) {
 				String id = request.getParameter("id");
 				
-				Usuario usuario = usuarioRepository.buscarPorId(id);
+				Usuario usuario = usuarioRepository.buscarPorId(id, super.getUsuarioLogado(request));
 				
 				request.setAttribute("msg", "Atualize as informações clicando em salvar");
 				request.setAttribute("usuarioSalvo", usuario);
@@ -69,7 +68,7 @@ public class ServletUsuario extends HttpServlet {
 			
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listar")) {
 				
-				List<Usuario> lista = usuarioRepository.listarUsuarios();
+				List<Usuario> lista = usuarioRepository.listarUsuarios(super.getUsuarioLogado(request));
 				
 				request.setAttribute("lista", lista);
 				
@@ -115,7 +114,7 @@ public class ServletUsuario extends HttpServlet {
 			if (usuarioRepository.validarLogin(usuario.getLogin()) && usuario.getId() == null) {
 				msg = "Já existe usuário com esse login!";
 			} else {
-				usuario = usuarioRepository.salvar(usuario);
+				usuario = usuarioRepository.salvar(usuario, super.getUsuarioLogado(request));
 			}
 
 			request.setAttribute("msg", msg);
