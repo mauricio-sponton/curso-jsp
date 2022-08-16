@@ -229,6 +229,7 @@ public class UsuarioRepository {
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
 			usuario.setFoto(resultado.getString("foto"));
+			usuario.setExtensaoFoto(resultado.getString("extensao_foto"));
 		}
 
 		return usuario;

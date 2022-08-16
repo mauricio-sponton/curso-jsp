@@ -18,7 +18,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
-
 @MultipartConfig
 public class ServletUsuario extends ServletGenericUtil {
 	private static final long serialVersionUID = 1L;
@@ -40,54 +39,67 @@ public class ServletUsuario extends ServletGenericUtil {
 				request.setAttribute("msg", "Usuário excluido com sucesso!");
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
 			}
-			
+
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("deletar-ajax")) {
 				String idUsuario = request.getParameter("id");
 
 				usuarioRepository.deletar(idUsuario);
 				response.getWriter().write("Excluído com sucesso");
-			
+
 			}
-			
+
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUsuario")) {
 				String nomeBusca = request.getParameter("nomeBusca");
-				List<Usuario> lista = usuarioRepository.conultarUsuariosPorNome(nomeBusca, super.getUsuarioLogado(request));
-				
+				List<Usuario> lista = usuarioRepository.conultarUsuariosPorNome(nomeBusca,
+						super.getUsuarioLogado(request));
+
 				ObjectMapper mapper = new ObjectMapper();
 				String json = mapper.writeValueAsString(lista);
 				response.getWriter().write(json);
-				
-			
+
 			}
-			
+
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("editar")) {
 				String id = request.getParameter("id");
-				
+
 				Usuario usuario = usuarioRepository.buscarPorId(id, super.getUsuarioLogado(request));
-				
+
 				request.setAttribute("msg", "Atualize as informações clicando em salvar");
 				request.setAttribute("usuarioSalvo", usuario);
 
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
-				
-			
+
 			}
-			
+
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("listar")) {
-				
+
 				List<Usuario> lista = usuarioRepository.listarUsuarios(super.getUsuarioLogado(request));
-				
+
 				request.setAttribute("lista", lista);
-				
+
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
-				
-			
+
 			}
-			
+
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("downloadFoto")) {
+				
+				String idUsuario = request.getParameter("id");
+
+				Usuario usuario = usuarioRepository.buscarPorId(idUsuario, super.getUsuarioLogado(request));
+				
+				if(usuario.getFoto() != null && !usuario.getFoto().isEmpty()) {
+					
+					response.setHeader("Content-Disposition", "attachment;filename=arquivo." + usuario.getExtensaoFoto());
+					new Base64();
+					response.getOutputStream().write(Base64.decodeBase64(usuario.getFoto().split(",")[1]));
+				}
+
+			}
+
 			else {
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
 			}
-			
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -121,20 +133,21 @@ public class ServletUsuario extends ServletGenericUtil {
 			usuario.setSenha(senha);
 			usuario.setPerfil(perfil);
 			usuario.setSexo(sexo);
-			
-			if(ServletFileUpload.isMultipartContent(request)) {
+
+			if (ServletFileUpload.isMultipartContent(request)) {
 				Part part = request.getPart("fileFoto");
-				
-				if(part.getSize() > 0) {
-					
+
+				if (part.getSize() > 0) {
+
 					byte[] foto = IOUtils.toByteArray(part.getInputStream());
 					new Base64();
-					String imagemBase64 = "data:image/" + part.getContentType().split("/")[1] + ";base64," + Base64.encodeBase64String(foto);
-					
+					String imagemBase64 = "data:image/" + part.getContentType().split("/")[1] + ";base64,"
+							+ Base64.encodeBase64String(foto);
+
 					usuario.setFoto(imagemBase64);
 					usuario.setExtensaoFoto(part.getContentType().split("/")[1]);
 				}
-				
+
 			}
 
 			if (usuarioRepository.validarLogin(usuario.getLogin()) && usuario.getId() == null) {

@@ -112,7 +112,8 @@
 																
 																	<div class="input-group-prepend">
 																		<c:if test="${usuarioSalvo.foto != '' && usuarioSalvo.foto != null}">
-																			<img alt="Imagem do usuário" src="${usuarioSalvo.foto}" width="60px" id="fotoBase64">
+																			<a href="<%= request.getContextPath() %>/ServletUsuario?acao=downloadFoto&id=${usuarioSalvo.id}">
+																				<img alt="Imagem do usuário" src="${usuarioSalvo.foto}" width="60px" id="fotoBase64"></a>
 																		</c:if>
 																		<c:if test="${usuarioSalvo.foto == '' || usuarioSalvo.foto == null}">
 																			<img alt="Imagem do usuário" src="<%= request.getContextPath() %>/assets/images/upload.svg" width="60px" id="fotoBase64">
