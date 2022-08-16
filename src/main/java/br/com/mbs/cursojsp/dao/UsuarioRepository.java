@@ -36,9 +36,23 @@ public class UsuarioRepository {
 			statement.execute();
 
 			connection.commit();
+
+			if (usuario.getFoto() != null && !usuario.getFoto().isEmpty()) {
+				sql = "update usuario set foto=?, extensao_foto=? where login=?";
+				statement = connection.prepareStatement(sql);
+				statement.setString(1, usuario.getFoto());
+				statement.setString(2, usuario.getExtensaoFoto());
+				statement.setString(3, usuario.getLogin());
+
+				statement.execute();
+
+				connection.commit();
+			}
+
 		} else {
 
-			String sql = "update usuario set login=?, senha=?, nome=?, email=?, perfil=?, sexo=? where id= " + usuario.getId() + "";
+			String sql = "update usuario set login=?, senha=?, nome=?, email=?, perfil=?, sexo=? where id= "
+					+ usuario.getId() + "";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, usuario.getLogin());
@@ -51,6 +65,18 @@ public class UsuarioRepository {
 			statement.executeUpdate();
 
 			connection.commit();
+
+			if (usuario.getFoto() != null && !usuario.getFoto().isEmpty()) {
+				sql = "update usuario set foto=?, extensao_foto=? where id=?";
+				statement = connection.prepareStatement(sql);
+				statement.setString(1, usuario.getFoto());
+				statement.setString(2, usuario.getExtensaoFoto());
+				statement.setLong(3, usuario.getId());
+
+				statement.execute();
+
+				connection.commit();
+			}
 		}
 
 		return this.buscarPorLoginEUsuarioLogado(usuario.getLogin(), usuarioLogado);
@@ -106,7 +132,7 @@ public class UsuarioRepository {
 
 		return lista;
 	}
-	
+
 	public Usuario buscarPorLogin(String login) throws SQLException {
 
 		String sql = "select * from usuario where upper(login) = upper('" + login + "') and adm is false";
@@ -130,7 +156,7 @@ public class UsuarioRepository {
 
 		return usuario;
 	}
-	
+
 	public Usuario buscarLogado(String login) throws SQLException {
 
 		String sql = "select * from usuario where upper(login) = upper('" + login + "')";
@@ -154,11 +180,11 @@ public class UsuarioRepository {
 
 		return usuario;
 	}
-	
 
 	public Usuario buscarPorLoginEUsuarioLogado(String login, Long usuarioLogado) throws SQLException {
 
-		String sql = "select * from usuario where upper(login) = upper('" + login + "') and adm is false and usuario_logado_id = " + usuarioLogado;
+		String sql = "select * from usuario where upper(login) = upper('" + login
+				+ "') and adm is false and usuario_logado_id = " + usuarioLogado;
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		ResultSet resultado = statement.executeQuery();
