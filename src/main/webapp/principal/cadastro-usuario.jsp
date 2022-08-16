@@ -111,9 +111,9 @@
 																<div class="form-group form-default input-group">
 																
 																	<div class="input-group-prepend">
-																		<img alt="Imagem do usuário" src="" width="70px">
+																		<img alt="Imagem do usuário" src="<%= request.getContextPath() %>/assets/images/upload.svg" width="60px" id="fotoBase64">
 																	</div>
-																	<input type="file" class="form-control-file ml-4">
+																	<input type="file" class="form-control-file ml-4" accept="image/*" onchange="visualizarImg('fotoBase64', 'fileFoto')" id="fileFoto" name="fileFoto">
 																</div>
 																</div></div>
 															
@@ -243,6 +243,23 @@
 
 		<jsp:include page="javascript.jsp"></jsp:include>
 		<script type="text/javascript">
+		
+			function visualizarImg(fotoBase64, fileFoto){
+				var preview = document.getElementById(fotoBase64);
+				var file = document.getElementById(fileFoto).files[0];
+				var reader = new FileReader();
+				
+				reader.onloadend = function (){
+					preview.src = reader.result;
+				};
+				
+				if(file){
+					reader.readAsDataURL(file);
+				}else{
+					preview.src = '';
+				}
+			}
+		
 			function buscarUsuario() {
 				var nomeBusca = document.getElementById('nomeBusca').value;
 				var urlAction = document.getElementById('formUsuario').action;

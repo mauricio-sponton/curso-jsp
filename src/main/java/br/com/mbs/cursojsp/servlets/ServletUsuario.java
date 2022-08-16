@@ -3,6 +3,10 @@ package br.com.mbs.cursojsp.servlets;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.tomcat.jakartaee.commons.compress.utils.IOUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.mbs.cursojsp.dao.UsuarioRepository;
@@ -12,6 +16,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Part;
 
 
 @MultipartConfig
@@ -116,6 +121,13 @@ public class ServletUsuario extends ServletGenericUtil {
 			usuario.setSenha(senha);
 			usuario.setPerfil(perfil);
 			usuario.setSexo(sexo);
+			
+			if(ServletFileUpload.isMultipartContent(request)) {
+				Part part = request.getPart("fileFoto");
+				byte[] foto = IOUtils.toByteArray(part.getInputStream());
+				new Base64();
+				String imagemBase64 = Base64.encodeBase64String(foto);
+			}
 
 			if (usuarioRepository.validarLogin(usuario.getLogin()) && usuario.getId() == null) {
 				msg = "Já existe usuário com esse login!";
