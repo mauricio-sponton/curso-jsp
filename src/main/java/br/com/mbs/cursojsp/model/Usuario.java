@@ -14,6 +14,8 @@ public class Usuario implements Serializable {
 	private boolean adm;
 	private String perfil;
 	private String sexo;
+	private String foto;
+	private String extensaoFoto;
 
 	public boolean existe() {
 		return this.id != null && this.id > 0;
@@ -21,6 +23,22 @@ public class Usuario implements Serializable {
 
 	public boolean naoExiste() {
 		return this.id == null;
+	}
+
+	public String getFoto() {
+		return foto;
+	}
+
+	public void setFoto(String foto) {
+		this.foto = foto;
+	}
+
+	public String getExtensaoFoto() {
+		return extensaoFoto;
+	}
+
+	public void setExtensaoFoto(String extensaoFoto) {
+		this.extensaoFoto = extensaoFoto;
 	}
 
 	public String getSexo() {

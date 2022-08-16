@@ -35,7 +35,7 @@
 														<h5>Cadastro de usuário</h5>
 													</div>
 													<div class="card-block">
-														<form class="form-material" id="formUsuario"
+														<form class="form-material" id="formUsuario" enctype="multipart/form-data"
 															action="<%=request.getContextPath()%>/ServletUsuario"
 															method="post">
 															<input type="hidden" name="acao" id="acao">
@@ -104,6 +104,19 @@
 																	</div>
 																</div>
 															</div>
+															
+															<div class="form-group row">
+																<div class="col-sm-12">
+																
+																<div class="form-group form-default input-group">
+																
+																	<div class="input-group-prepend">
+																		<img alt="Imagem do usuário" src="" width="70px">
+																	</div>
+																	<input type="file" class="form-control-file ml-4">
+																</div>
+																</div></div>
+															
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<select class="form-control" name="perfil"
@@ -119,6 +132,8 @@
 																	</select>
 																</div>
 															</div>
+															
+															
 
 															<button class="btn waves-effect waves-light btn-primary"
 																onclick="limparForm();" type="button">Novo</button>
