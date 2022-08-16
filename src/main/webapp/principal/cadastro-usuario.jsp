@@ -111,7 +111,12 @@
 																<div class="form-group form-default input-group">
 																
 																	<div class="input-group-prepend">
-																		<img alt="Imagem do usuário" src="<%= request.getContextPath() %>/assets/images/upload.svg" width="60px" id="fotoBase64">
+																		<c:if test="${usuarioSalvo.foto != '' && usuarioSalvo.foto != null}">
+																			<img alt="Imagem do usuário" src="${usuarioSalvo.foto}" width="60px" id="fotoBase64">
+																		</c:if>
+																		<c:if test="${usuarioSalvo.foto == '' || usuarioSalvo.foto == null}">
+																			<img alt="Imagem do usuário" src="<%= request.getContextPath() %>/assets/images/upload.svg" width="60px" id="fotoBase64">
+																		</c:if>
 																	</div>
 																	<input type="file" class="form-control-file ml-4" accept="image/*" onchange="visualizarImg('fotoBase64', 'fileFoto')" id="fileFoto" name="fileFoto">
 																</div>
@@ -119,7 +124,7 @@
 															
 															<div class="form-group row">
 																<div class="col-sm-12">
-																	<select class="form-control" name="perfil"
+																	<select class="form-control" name="perfil" id="perfil"
 																		aria-label="Default select example">
 																		<option disabled="disabled">Selecione o
 																			perfil</option>
@@ -354,9 +359,13 @@
 			function limparForm() {
 				var form = document.getElementById('formUsuario').elements;
 
+				
 				for (var i = 0; i < form.length; i++) {
 					form[i].value = '';
 				}
+				document.getElementById("fotoBase64").src='assets//images/upload.svg';
+				document.getElementById("perfil").value = 'ADMIN';
+				document.getElementById("masculino").checked = true;
 			}
 		</script>
 </body>

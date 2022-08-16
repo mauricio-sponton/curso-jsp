@@ -124,12 +124,17 @@ public class ServletUsuario extends ServletGenericUtil {
 			
 			if(ServletFileUpload.isMultipartContent(request)) {
 				Part part = request.getPart("fileFoto");
-				byte[] foto = IOUtils.toByteArray(part.getInputStream());
-				new Base64();
-				String imagemBase64 = "data:image/" + part.getContentType().split("/")[1] + ";base64," + Base64.encodeBase64String(foto);
 				
-				usuario.setFoto(imagemBase64);
-				usuario.setExtensaoFoto(part.getContentType().split("/")[1]);
+				if(part.getSize() > 0) {
+					
+					byte[] foto = IOUtils.toByteArray(part.getInputStream());
+					new Base64();
+					String imagemBase64 = "data:image/" + part.getContentType().split("/")[1] + ";base64," + Base64.encodeBase64String(foto);
+					
+					usuario.setFoto(imagemBase64);
+					usuario.setExtensaoFoto(part.getContentType().split("/")[1]);
+				}
+				
 			}
 
 			if (usuarioRepository.validarLogin(usuario.getLogin()) && usuario.getId() == null) {

@@ -152,6 +152,7 @@ public class UsuarioRepository {
 			usuario.setAdm(resultado.getBoolean("adm"));
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
+			usuario.setFoto(resultado.getString("foto"));
 		}
 
 		return usuario;
@@ -176,6 +177,7 @@ public class UsuarioRepository {
 			usuario.setAdm(resultado.getBoolean("adm"));
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
+			usuario.setFoto(resultado.getString("foto"));
 		}
 
 		return usuario;
@@ -200,6 +202,7 @@ public class UsuarioRepository {
 			usuario.setSenha(resultado.getString("senha"));
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
+			usuario.setFoto(resultado.getString("foto"));
 		}
 
 		return usuario;
@@ -225,6 +228,7 @@ public class UsuarioRepository {
 			usuario.setSenha(resultado.getString("senha"));
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
+			usuario.setFoto(resultado.getString("foto"));
 		}
 
 		return usuario;
