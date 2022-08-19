@@ -123,6 +123,12 @@ public class ServletUsuario extends ServletGenericUtil {
 			String senha = request.getParameter("senha");
 			String perfil = request.getParameter("perfil");
 			String sexo = request.getParameter("sexo");
+			String cep = request.getParameter("cep");
+			String logradouro = request.getParameter("logradouro");
+			String bairro = request.getParameter("bairro");
+			String localidade = request.getParameter("localidade");
+			String uf = request.getParameter("uf");
+			String numero = request.getParameter("numero");
 
 			Usuario usuario = new Usuario();
 
@@ -133,6 +139,12 @@ public class ServletUsuario extends ServletGenericUtil {
 			usuario.setSenha(senha);
 			usuario.setPerfil(perfil);
 			usuario.setSexo(sexo);
+			usuario.setCep(cep);
+			usuario.setLogradouro(logradouro);
+			usuario.setBairro(bairro);
+			usuario.setLocalidade(localidade);
+			usuario.setUf(uf);
+			usuario.setNumero(numero);
 
 			if (ServletFileUpload.isMultipartContent(request)) {
 				Part part = request.getPart("fileFoto");

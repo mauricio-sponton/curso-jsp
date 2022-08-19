@@ -22,7 +22,7 @@ public class UsuarioRepository {
 
 		if (usuario.naoExiste()) {
 
-			String sql = "insert into usuario (login, senha, nome, email, usuario_logado_id, perfil, sexo) values (?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into usuario (login, senha, nome, email, usuario_logado_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, usuario.getLogin());
@@ -32,6 +32,12 @@ public class UsuarioRepository {
 			statement.setLong(5, usuarioLogado);
 			statement.setString(6, usuario.getPerfil());
 			statement.setString(7, usuario.getSexo());
+			statement.setString(8, usuario.getCep());
+			statement.setString(9, usuario.getLogradouro());
+			statement.setString(10, usuario.getBairro());
+			statement.setString(11, usuario.getLocalidade());
+			statement.setString(12, usuario.getUf());
+			statement.setString(13, usuario.getNumero());
 
 			statement.execute();
 
@@ -51,7 +57,7 @@ public class UsuarioRepository {
 
 		} else {
 
-			String sql = "update usuario set login=?, senha=?, nome=?, email=?, perfil=?, sexo=? where id= "
+			String sql = "update usuario set login=?, senha=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=? where id= "
 					+ usuario.getId() + "";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -61,6 +67,12 @@ public class UsuarioRepository {
 			statement.setString(4, usuario.getEmail());
 			statement.setString(5, usuario.getPerfil());
 			statement.setString(6, usuario.getSexo());
+			statement.setString(7, usuario.getCep());
+			statement.setString(8, usuario.getLogradouro());
+			statement.setString(9, usuario.getBairro());
+			statement.setString(10, usuario.getLocalidade());
+			statement.setString(11, usuario.getUf());
+			statement.setString(12, usuario.getNumero());
 
 			statement.executeUpdate();
 
@@ -153,6 +165,12 @@ public class UsuarioRepository {
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
 			usuario.setFoto(resultado.getString("foto"));
+			usuario.setCep(resultado.getString("cep"));
+			usuario.setLogradouro(resultado.getString("logradouro"));
+			usuario.setBairro(resultado.getString("bairro"));
+			usuario.setLocalidade(resultado.getString("localidade"));
+			usuario.setUf(resultado.getString("uf"));
+			usuario.setNumero(resultado.getString("numero"));
 		}
 
 		return usuario;
@@ -178,6 +196,12 @@ public class UsuarioRepository {
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
 			usuario.setFoto(resultado.getString("foto"));
+			usuario.setCep(resultado.getString("cep"));
+			usuario.setLogradouro(resultado.getString("logradouro"));
+			usuario.setBairro(resultado.getString("bairro"));
+			usuario.setLocalidade(resultado.getString("localidade"));
+			usuario.setUf(resultado.getString("uf"));
+			usuario.setNumero(resultado.getString("numero"));
 		}
 
 		return usuario;
@@ -203,6 +227,12 @@ public class UsuarioRepository {
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
 			usuario.setFoto(resultado.getString("foto"));
+			usuario.setCep(resultado.getString("cep"));
+			usuario.setLogradouro(resultado.getString("logradouro"));
+			usuario.setBairro(resultado.getString("bairro"));
+			usuario.setLocalidade(resultado.getString("localidade"));
+			usuario.setUf(resultado.getString("uf"));
+			usuario.setNumero(resultado.getString("numero"));
 		}
 
 		return usuario;
@@ -230,6 +260,12 @@ public class UsuarioRepository {
 			usuario.setSexo(resultado.getString("sexo"));
 			usuario.setFoto(resultado.getString("foto"));
 			usuario.setExtensaoFoto(resultado.getString("extensao_foto"));
+			usuario.setCep(resultado.getString("cep"));
+			usuario.setLogradouro(resultado.getString("logradouro"));
+			usuario.setBairro(resultado.getString("bairro"));
+			usuario.setLocalidade(resultado.getString("localidade"));
+			usuario.setUf(resultado.getString("uf"));
+			usuario.setNumero(resultado.getString("numero"));
 		}
 
 		return usuario;
