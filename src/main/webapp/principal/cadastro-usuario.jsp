@@ -35,7 +35,8 @@
 														<h5>Cadastro de usuário</h5>
 													</div>
 													<div class="card-block">
-														<form class="form-material" id="formUsuario" enctype="multipart/form-data"
+														<form class="form-material" id="formUsuario"
+															enctype="multipart/form-data"
 															action="<%=request.getContextPath()%>/ServletUsuario"
 															method="post">
 															<input type="hidden" name="acao" id="acao">
@@ -51,10 +52,14 @@
 																</div>
 
 																<div class="col-sm-10">
-																	<input type="radio" name="sexo" id="masculino" value="MASCULINO" ${usuarioSalvo.sexo == 'MASCULINO' ? 'checked' : ''}>
+																	<input type="radio" name="sexo" id="masculino"
+																		value="MASCULINO"
+																		${usuarioSalvo.sexo == 'MASCULINO' ? 'checked' : ''}>
 																	<label for="masculino">Masculino</label> <input
-																		type="radio" name="sexo" id="feminino" value="FEMININO" ${usuarioSalvo.sexo == 'FEMININO' ? 'checked' : ''}> <label
-																		for="feminino">Feminino</label>
+																		type="radio" name="sexo" id="feminino"
+																		value="FEMININO"
+																		${usuarioSalvo.sexo == 'FEMININO' ? 'checked' : ''}>
+																	<label for="feminino">Feminino</label>
 																</div>
 
 
@@ -82,31 +87,31 @@
 
 																</div>
 															</div>
-															
+
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
-																		<input onblur="pesquisaCEP();" type="text" name="cep" id="cep"
-																			value="${usuarioSalvo.cep}" class="form-control"
-																			required> <span class="form-bar"></span> <label
-																			class="float-label">CEP</label>
+																		<input onblur="pesquisaCEP();" type="text" name="cep"
+																			id="cep" value="${usuarioSalvo.cep}"
+																			class="form-control" required> <span
+																			class="form-bar"></span> <label class="float-label">CEP</label>
 																	</div>
 
 																</div>
 															</div>
-															
+
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
 																		<input type="text" name="logradouro" id="logradouro"
-																			value="${usuarioSalvo.logradouro}" class="form-control"
-																			required> <span class="form-bar"></span> <label
-																			class="float-label">Logradouro</label>
+																			value="${usuarioSalvo.logradouro}"
+																			class="form-control" required> <span
+																			class="form-bar"></span> <label class="float-label">Logradouro</label>
 																	</div>
 
 																</div>
 															</div>
-															
+
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
@@ -118,19 +123,19 @@
 
 																</div>
 															</div>
-															
+
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
 																		<input type="text" name="localidade" id="localidade"
-																			value="${usuarioSalvo.localidade}" class="form-control"
-																			required> <span class="form-bar"></span> <label
-																			class="float-label">Cidade</label>
+																			value="${usuarioSalvo.localidade}"
+																			class="form-control" required> <span
+																			class="form-bar"></span> <label class="float-label">Cidade</label>
 																	</div>
 
 																</div>
 															</div>
-															
+
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
@@ -142,7 +147,7 @@
 
 																</div>
 															</div>
-															
+
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<div class="form-group form-default">
@@ -176,25 +181,37 @@
 																	</div>
 																</div>
 															</div>
-															
+
 															<div class="form-group row">
 																<div class="col-sm-12">
-																
-																<div class="form-group form-default input-group">
-																
-																	<div class="input-group-prepend">
-																		<c:if test="${usuarioSalvo.foto != '' && usuarioSalvo.foto != null}">
-																			<a href="<%= request.getContextPath() %>/ServletUsuario?acao=downloadFoto&id=${usuarioSalvo.id}">
-																				<img alt="Imagem do usuário" src="${usuarioSalvo.foto}" width="60px" id="fotoBase64"></a>
-																		</c:if>
-																		<c:if test="${usuarioSalvo.foto == '' || usuarioSalvo.foto == null}">
-																			<img alt="Imagem do usuário" src="<%= request.getContextPath() %>/assets/images/upload.svg" width="60px" id="fotoBase64">
-																		</c:if>
+
+																	<div class="form-group form-default input-group">
+
+																		<div class="input-group-prepend">
+																			<c:if
+																				test="${usuarioSalvo.foto != '' && usuarioSalvo.foto != null}">
+																				<a
+																					href="<%= request.getContextPath() %>/ServletUsuario?acao=downloadFoto&id=${usuarioSalvo.id}">
+																					<img alt="Imagem do usuário"
+																					src="${usuarioSalvo.foto}" width="60px"
+																					id="fotoBase64">
+																				</a>
+																			</c:if>
+																			<c:if
+																				test="${usuarioSalvo.foto == '' || usuarioSalvo.foto == null}">
+																				<img alt="Imagem do usuário"
+																					src="<%=request.getContextPath()%>/assets/images/upload.svg"
+																					width="60px" id="fotoBase64">
+																			</c:if>
+																		</div>
+																		<input type="file" class="form-control-file ml-4"
+																			accept="image/*"
+																			onchange="visualizarImg('fotoBase64', 'fileFoto')"
+																			id="fileFoto" name="fileFoto">
 																	</div>
-																	<input type="file" class="form-control-file ml-4" accept="image/*" onchange="visualizarImg('fotoBase64', 'fileFoto')" id="fileFoto" name="fileFoto">
 																</div>
-																</div></div>
-															
+															</div>
+
 															<div class="form-group row">
 																<div class="col-sm-12">
 																	<select class="form-control" name="perfil" id="perfil"
@@ -210,8 +227,8 @@
 																	</select>
 																</div>
 															</div>
-															
-															
+
+
 
 															<button class="btn waves-effect waves-light btn-primary"
 																onclick="limparForm();" type="button">Novo</button>
@@ -255,6 +272,19 @@
 
 
 												</div>
+
+												<nav aria-label="Page navigation example">
+													<ul class="pagination">
+														<%
+														int totalPagina = (int) request.getAttribute("totalPagina");
+
+														for (int p = 0; p < totalPagina; p++) {
+															String url = request.getContextPath() + "/ServletUsuario?acao=paginar&pagina=" + (p * 5);
+															out.print("<li class=\"page-item\"><a class=\"page-link\" href=\"" + url + "\">" + (p + 1) + "</a></li>");
+														}
+														%>
+													</ul>
+												</nav>
 											</div>
 
 
@@ -321,39 +351,39 @@
 
 		<jsp:include page="javascript.jsp"></jsp:include>
 		<script type="text/javascript">
-		
-			function pesquisaCEP(){
+			function pesquisaCEP() {
 				var cep = $('#cep').val();
-				
-				$.getJSON("https://viacep.com.br/ws/"+ cep +"/json/?callback=?", function(dados){
+
+				$.getJSON("https://viacep.com.br/ws/" + cep
+						+ "/json/?callback=?", function(dados) {
 					if (!("erro" in dados)) {
-						
+
 						$("#cep").val(dados.cep);
-                        $("#logradouro").val(dados.logradouro);
-                        $("#bairro").val(dados.bairro);
-                        $("#localidade").val(dados.localidade);
-                        $("#uf").val(dados.uf);
-                    } 
-                    
+						$("#logradouro").val(dados.logradouro);
+						$("#bairro").val(dados.bairro);
+						$("#localidade").val(dados.localidade);
+						$("#uf").val(dados.uf);
+					}
+
 				});
 			}
-		
-			function visualizarImg(fotoBase64, fileFoto){
+
+			function visualizarImg(fotoBase64, fileFoto) {
 				var preview = document.getElementById(fotoBase64);
 				var file = document.getElementById(fileFoto).files[0];
 				var reader = new FileReader();
-				
-				reader.onloadend = function (){
+
+				reader.onloadend = function() {
 					preview.src = reader.result;
 				};
-				
-				if(file){
+
+				if (file) {
 					reader.readAsDataURL(file);
-				}else{
+				} else {
 					preview.src = '';
 				}
 			}
-		
+
 			function buscarUsuario() {
 				var nomeBusca = document.getElementById('nomeBusca').value;
 				var urlAction = document.getElementById('formUsuario').action;
@@ -448,11 +478,10 @@
 			function limparForm() {
 				var form = document.getElementById('formUsuario').elements;
 
-				
 				for (var i = 0; i < form.length; i++) {
 					form[i].value = '';
 				}
-				document.getElementById("fotoBase64").src='assets//images/upload.svg';
+				document.getElementById("fotoBase64").src = 'assets//images/upload.svg';
 				document.getElementById("perfil").value = 'ADMIN';
 				document.getElementById("masculino").checked = true;
 			}

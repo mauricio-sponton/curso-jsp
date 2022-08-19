@@ -93,12 +93,56 @@ public class UsuarioRepository {
 
 		return this.buscarPorLoginEUsuarioLogado(usuario.getLogin(), usuarioLogado);
 	}
+	
+	public List<Usuario> listarUsuariosPaginado(Long usuarioLogado, Integer offset) throws SQLException {
+
+		List<Usuario> lista = new ArrayList<Usuario>();
+
+		String sql = "select * from usuario where adm is false and usuario_logado_id = " + usuarioLogado + " order by nome offset "+ offset +" limit 5";
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		ResultSet resultado = statement.executeQuery();
+
+		while (resultado.next()) {
+			Usuario usuario = new Usuario();
+			usuario.setId(resultado.getLong("id"));
+			usuario.setNome(resultado.getString("nome"));
+			usuario.setEmail(resultado.getString("email"));
+			usuario.setLogin(resultado.getString("login"));
+			usuario.setPerfil(resultado.getString("perfil"));
+			usuario.setSexo(resultado.getString("sexo"));
+
+			lista.add(usuario);
+		}
+
+		return lista;
+	}
+	
+	public int totalPaginas(Long usuarioLogado) throws SQLException {
+		
+		String sql = "select count(1) as total from usuario where usuario_logado_id = " + usuarioLogado;
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		ResultSet resultado = statement.executeQuery();
+		resultado.next();
+		
+		Double totalRegistros = resultado.getDouble("total");
+		Double quantidadePorPagina = 5.0;
+		Double pagina = totalRegistros / quantidadePorPagina;
+		Double resto = pagina % 2;
+		
+		if(resto > 0) {
+			pagina ++;
+		}
+		
+		return pagina.intValue();
+	}
 
 	public List<Usuario> listarUsuarios(Long usuarioLogado) throws SQLException {
 
 		List<Usuario> lista = new ArrayList<Usuario>();
 
-		String sql = "select * from usuario where adm is false and usuario_logado_id = " + usuarioLogado;
+		String sql = "select * from usuario where adm is false and usuario_logado_id = " + usuarioLogado + " limit 5";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		ResultSet resultado = statement.executeQuery();
@@ -122,7 +166,7 @@ public class UsuarioRepository {
 
 		List<Usuario> lista = new ArrayList<Usuario>();
 
-		String sql = "select * from usuario where upper(nome) like upper(?) and adm is false and usuario_logado_id = ? order by id";
+		String sql = "select * from usuario where upper(nome) like upper(?) and adm is false and usuario_logado_id = ? order by id limit 5";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		statement.setString(1, "%" + nome + "%");

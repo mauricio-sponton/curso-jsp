@@ -75,7 +75,9 @@ public class ServletUsuario extends ServletGenericUtil {
 
 				List<Usuario> lista = usuarioRepository.listarUsuarios(super.getUsuarioLogado(request));
 
+				request.setAttribute("totalPagina", usuarioRepository.totalPaginas(getUsuarioLogado(request)));
 				request.setAttribute("lista", lista);
+				
 
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
 
@@ -94,6 +96,18 @@ public class ServletUsuario extends ServletGenericUtil {
 					response.getOutputStream().write(Base64.decodeBase64(usuario.getFoto().split(",")[1]));
 				}
 
+			}
+			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("paginar")) {
+				Integer offset = Integer.parseInt(request.getParameter("pagina"));
+				List<Usuario> lista= usuarioRepository.listarUsuariosPaginado(getUsuarioLogado(request), offset);
+				
+				request.setAttribute("totalPagina", usuarioRepository.totalPaginas(getUsuarioLogado(request)));
+				request.setAttribute("lista", lista);
+				
+
+				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
+				
 			}
 
 			else {
