@@ -66,6 +66,7 @@ public class ServletUsuario extends ServletGenericUtil {
 
 				request.setAttribute("msg", "Atualize as informações clicando em salvar");
 				request.setAttribute("usuarioSalvo", usuario);
+				request.setAttribute("totalPagina", usuarioRepository.totalPaginas(getUsuarioLogado(request)));
 
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
 
