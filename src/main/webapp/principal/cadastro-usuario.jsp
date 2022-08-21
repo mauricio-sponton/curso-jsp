@@ -339,6 +339,13 @@
 							</table>
 
 						</div>
+						
+						<nav aria-label="Page navigation example">
+							<ul class="pagination" id="paginacaoUsuarioAjax">
+							
+							</ul>
+						</nav>
+						
 					</div>
 					<div class="modal-footer"
 						style="display: flex; justify-content: space-between;">
@@ -391,24 +398,20 @@
 
 				if (nomeBusca != null && nomeBusca != ''
 						&& nomeBusca.trim() != '') {
-					$
-							.ajax(
-									{
+					$.ajax({
 
-										method : "get",
-										url : urlAction,
-										data : "nomeBusca=" + nomeBusca
-												+ "&acao=buscarUsuario",
-										success : function(response) {
+							method : "get",
+							url : urlAction,
+							data : "nomeBusca=" + nomeBusca + "&acao=buscarUsuario",
+								success : function(response, textStatus, xhr) {
 
-											var json = JSON.parse(response);
+								var json = JSON.parse(response);
 
-											$('#tabela-usuario > tbody > tr')
-													.remove();
-
-											for (var i = 0; i < json.length; i++) {
-												$('#tabela-usuario > tbody')
-														.append(
+								$('#tabela-usuario > tbody > tr').remove();
+								$('#paginacaoUsuarioAjax > li').remove();
+								
+									for (var i = 0; i < json.length; i++) {
+										$('#tabela-usuario > tbody').append(
 																'<tr><td>'
 																		+ json[i].id
 																		+ '</td><td>'
@@ -421,6 +424,13 @@
 											$('#totalUsuarios').text(
 													'Total de usuários encontrados: '
 															+ json.length);
+											var totalPagina = xhr.getResponseHeader("totalPagina");
+											
+											for(var i = 0; i < totalPagina; i++){
+												var url = 'nomeBusca=' + nomeBusca + '&acao=buscarUsuarioPaginado&pagina=' + (i * 5);
+												$('#paginacaoUsuarioAjax').append('<li class="page-item"><a class="page-link" href="#" onclick="buscaUsuarioPaginado(\'' + url + '\')">' + (i + 1) + '</a></li>');
+											}
+											
 										}
 
 									}).fail(
@@ -429,6 +439,51 @@
 												+ xhr.responseText);
 									});
 				}
+			}
+			
+			function buscaUsuarioPaginado(url){
+				var nomeBusca = document.getElementById('nomeBusca').value;
+				var urlAction = document.getElementById('formUsuario').action;
+				$.ajax({
+
+					method : "get",
+					url : urlAction,
+					data: url,
+						success : function(response, textStatus, xhr) {
+
+						var json = JSON.parse(response);
+
+						$('#tabela-usuario > tbody > tr').remove();
+						$('#paginacaoUsuarioAjax > li').remove();
+						
+							for (var i = 0; i < json.length; i++) {
+								$('#tabela-usuario > tbody').append(
+														'<tr><td>'
+																+ json[i].id
+																+ '</td><td>'
+																+ json[i].nome
+																+ '</td><td><button type="button" class="btn btn-info" onclick="editar('
+																+ json[i].id
+																+ ');">Visualizar</button></td></tr>');
+									}
+
+									$('#totalUsuarios').text(
+											'Total de usuários encontrados: '
+													+ json.length);
+									var totalPagina = xhr.getResponseHeader("totalPagina");
+									
+									for(var i = 0; i < totalPagina; i++){
+										var url = 'nomeBusca=' + nomeBusca + '&acao=buscarUsuarioPaginado&pagina=' + (i * 5);
+										$('#paginacaoUsuarioAjax').append('<li class="page-item"><a class="page-link" href="#" onclick="buscaUsuarioPaginado(\'' + url + '\')">' + (i + 1) + '</a></li>');
+									}
+									
+						}
+
+							}).fail(
+							function(xhr, status, erroThrow) {
+								console.log('Erro ao buscar usuário: '
+										+ xhr.responseText);
+							});
 			}
 
 			function editar(id) {

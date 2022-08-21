@@ -55,8 +55,25 @@ public class ServletUsuario extends ServletGenericUtil {
 
 				ObjectMapper mapper = new ObjectMapper();
 				String json = mapper.writeValueAsString(lista);
+
+				response.addHeader("totalPagina", "" + usuarioRepository.conultarUsuariosPorNomePaginado(nomeBusca,
+						super.getUsuarioLogado(request)));
 				response.getWriter().write(json);
 
+			}
+
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("buscarUsuarioPaginado")) {
+				String nomeBusca = request.getParameter("nomeBusca");
+				String pagina = request.getParameter("pagina");
+				List<Usuario> lista = usuarioRepository.conultarUsuariosPorNomeOffset(nomeBusca,
+						super.getUsuarioLogado(request), Integer.parseInt(pagina));
+
+				ObjectMapper mapper = new ObjectMapper();
+				String json = mapper.writeValueAsString(lista);
+
+				response.addHeader("totalPagina", "" + usuarioRepository.conultarUsuariosPorNomePaginado(nomeBusca,
+						super.getUsuarioLogado(request)));
+				response.getWriter().write(json);
 			}
 
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("editar")) {
@@ -78,37 +95,36 @@ public class ServletUsuario extends ServletGenericUtil {
 
 				request.setAttribute("totalPagina", usuarioRepository.totalPaginas(getUsuarioLogado(request)));
 				request.setAttribute("lista", lista);
-				
 
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
 
 			}
 
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("downloadFoto")) {
-				
+
 				String idUsuario = request.getParameter("id");
 
 				Usuario usuario = usuarioRepository.buscarPorId(idUsuario, super.getUsuarioLogado(request));
-				
-				if(usuario.getFoto() != null && !usuario.getFoto().isEmpty()) {
-					
-					response.setHeader("Content-Disposition", "attachment;filename=arquivo." + usuario.getExtensaoFoto());
+
+				if (usuario.getFoto() != null && !usuario.getFoto().isEmpty()) {
+
+					response.setHeader("Content-Disposition",
+							"attachment;filename=arquivo." + usuario.getExtensaoFoto());
 					new Base64();
 					response.getOutputStream().write(Base64.decodeBase64(usuario.getFoto().split(",")[1]));
 				}
 
 			}
-			
+
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("paginar")) {
 				Integer offset = Integer.parseInt(request.getParameter("pagina"));
-				List<Usuario> lista= usuarioRepository.listarUsuariosPaginado(getUsuarioLogado(request), offset);
-				
+				List<Usuario> lista = usuarioRepository.listarUsuariosPaginado(getUsuarioLogado(request), offset);
+
 				request.setAttribute("totalPagina", usuarioRepository.totalPaginas(getUsuarioLogado(request)));
 				request.setAttribute("lista", lista);
-				
 
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
-				
+
 			}
 
 			else {

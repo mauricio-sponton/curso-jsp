@@ -166,7 +166,7 @@ public class UsuarioRepository {
 
 		List<Usuario> lista = new ArrayList<Usuario>();
 
-		String sql = "select * from usuario where upper(nome) like upper(?) and adm is false and usuario_logado_id = ? order by id limit 5";
+		String sql = "select * from usuario where upper(nome) like upper(?) and adm is false and usuario_logado_id = ? order by id  limit 5";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		statement.setString(1, "%" + nome + "%");
@@ -187,6 +187,57 @@ public class UsuarioRepository {
 		}
 
 		return lista;
+	}
+	
+	public List<Usuario> conultarUsuariosPorNomeOffset(String nome, Long usuarioLogado, Integer offset) throws SQLException {
+
+		List<Usuario> lista = new ArrayList<Usuario>();
+
+		String sql = "select * from usuario where upper(nome) like upper(?) and adm is false and usuario_logado_id = ? order by id offset "+ offset + " limit 5";
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		statement.setString(1, "%" + nome + "%");
+		statement.setLong(2, usuarioLogado);
+
+		ResultSet resultado = statement.executeQuery();
+
+		while (resultado.next()) {
+			Usuario usuario = new Usuario();
+			usuario.setId(resultado.getLong("id"));
+			usuario.setNome(resultado.getString("nome"));
+			usuario.setEmail(resultado.getString("email"));
+			usuario.setLogin(resultado.getString("login"));
+			usuario.setPerfil(resultado.getString("perfil"));
+			usuario.setSexo(resultado.getString("sexo"));
+
+			lista.add(usuario);
+		}
+
+		return lista;
+	}
+	
+	public int conultarUsuariosPorNomePaginado(String nome, Long usuarioLogado) throws SQLException {
+
+
+		String sql = "select count(1) as total from usuario where upper(nome) like upper(?) and adm is false and usuario_logado_id = ? ";
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		statement.setString(1, "%" + nome + "%");
+		statement.setLong(2, usuarioLogado);
+
+		ResultSet resultado = statement.executeQuery();
+		resultado.next();
+		
+		Double totalRegistros = resultado.getDouble("total");
+		Double quantidadePorPagina = 5.0;
+		Double pagina = totalRegistros / quantidadePorPagina;
+		Double resto = pagina % 2;
+		
+		if(resto > 0) {
+			pagina ++;
+		}
+		
+		return pagina.intValue();
 	}
 
 	public Usuario buscarPorLogin(String login) throws SQLException {
