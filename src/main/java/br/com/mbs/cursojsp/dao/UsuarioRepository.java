@@ -93,12 +93,13 @@ public class UsuarioRepository {
 
 		return this.buscarPorLoginEUsuarioLogado(usuario.getLogin(), usuarioLogado);
 	}
-	
+
 	public List<Usuario> listarUsuariosPaginado(Long usuarioLogado, Integer offset) throws SQLException {
 
 		List<Usuario> lista = new ArrayList<Usuario>();
 
-		String sql = "select * from usuario where adm is false and usuario_logado_id = " + usuarioLogado + " order by nome offset "+ offset +" limit 5";
+		String sql = "select * from usuario where adm is false and usuario_logado_id = " + usuarioLogado
+				+ " order by nome offset " + offset + " limit 5";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		ResultSet resultado = statement.executeQuery();
@@ -117,24 +118,24 @@ public class UsuarioRepository {
 
 		return lista;
 	}
-	
+
 	public int totalPaginas(Long usuarioLogado) throws SQLException {
-		
+
 		String sql = "select count(1) as total from usuario where usuario_logado_id = " + usuarioLogado;
 		PreparedStatement statement = connection.prepareStatement(sql);
-		
+
 		ResultSet resultado = statement.executeQuery();
 		resultado.next();
-		
+
 		Double totalRegistros = resultado.getDouble("total");
 		Double quantidadePorPagina = 5.0;
 		Double pagina = totalRegistros / quantidadePorPagina;
 		Double resto = pagina % 2;
-		
-		if(resto > 0) {
-			pagina ++;
+
+		if (resto > 0) {
+			pagina++;
 		}
-		
+
 		return pagina.intValue();
 	}
 
@@ -188,12 +189,14 @@ public class UsuarioRepository {
 
 		return lista;
 	}
-	
-	public List<Usuario> conultarUsuariosPorNomeOffset(String nome, Long usuarioLogado, Integer offset) throws SQLException {
+
+	public List<Usuario> conultarUsuariosPorNomeOffset(String nome, Long usuarioLogado, Integer offset)
+			throws SQLException {
 
 		List<Usuario> lista = new ArrayList<Usuario>();
 
-		String sql = "select * from usuario where upper(nome) like upper(?) and adm is false and usuario_logado_id = ? order by id offset "+ offset + " limit 5";
+		String sql = "select * from usuario where upper(nome) like upper(?) and adm is false and usuario_logado_id = ? order by id offset "
+				+ offset + " limit 5";
 		PreparedStatement statement = connection.prepareStatement(sql);
 
 		statement.setString(1, "%" + nome + "%");
@@ -215,9 +218,8 @@ public class UsuarioRepository {
 
 		return lista;
 	}
-	
-	public int conultarUsuariosPorNomePaginado(String nome, Long usuarioLogado) throws SQLException {
 
+	public int conultarUsuariosPorNomePaginado(String nome, Long usuarioLogado) throws SQLException {
 
 		String sql = "select count(1) as total from usuario where upper(nome) like upper(?) and adm is false and usuario_logado_id = ? ";
 		PreparedStatement statement = connection.prepareStatement(sql);
@@ -227,16 +229,16 @@ public class UsuarioRepository {
 
 		ResultSet resultado = statement.executeQuery();
 		resultado.next();
-		
+
 		Double totalRegistros = resultado.getDouble("total");
 		Double quantidadePorPagina = 5.0;
 		Double pagina = totalRegistros / quantidadePorPagina;
 		Double resto = pagina % 2;
-		
-		if(resto > 0) {
-			pagina ++;
+
+		if (resto > 0) {
+			pagina++;
 		}
-		
+
 		return pagina.intValue();
 	}
 
@@ -322,6 +324,38 @@ public class UsuarioRepository {
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
 			usuario.setFoto(resultado.getString("foto"));
+			usuario.setCep(resultado.getString("cep"));
+			usuario.setLogradouro(resultado.getString("logradouro"));
+			usuario.setBairro(resultado.getString("bairro"));
+			usuario.setLocalidade(resultado.getString("localidade"));
+			usuario.setUf(resultado.getString("uf"));
+			usuario.setNumero(resultado.getString("numero"));
+		}
+
+		return usuario;
+	}
+
+	public Usuario buscarPorId(Long id) throws SQLException {
+
+		String sql = "select * from usuario where id = ? and adm is false";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setLong(1, id);
+
+		ResultSet resultado = statement.executeQuery();
+
+		Usuario usuario = new Usuario();
+
+		while (resultado.next()) {
+
+			usuario.setId(resultado.getLong("id"));
+			usuario.setNome(resultado.getString("nome"));
+			usuario.setEmail(resultado.getString("email"));
+			usuario.setLogin(resultado.getString("login"));
+			usuario.setSenha(resultado.getString("senha"));
+			usuario.setPerfil(resultado.getString("perfil"));
+			usuario.setSexo(resultado.getString("sexo"));
+			usuario.setFoto(resultado.getString("foto"));
+			usuario.setExtensaoFoto(resultado.getString("extensao_foto"));
 			usuario.setCep(resultado.getString("cep"));
 			usuario.setLogradouro(resultado.getString("logradouro"));
 			usuario.setBairro(resultado.getString("bairro"));
