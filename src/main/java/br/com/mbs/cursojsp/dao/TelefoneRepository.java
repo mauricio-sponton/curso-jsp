@@ -25,7 +25,7 @@ public class TelefoneRepository {
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setString(1, telefone.getNumero());
 		statement.setLong(2, telefone.getUsuarioDono().getId());
-		statement.setLong(2, telefone.getUsuarioLogado().getId());
+		statement.setLong(3, telefone.getUsuarioLogado().getId());
 		
 		statement.execute();
 		connection.commit();
@@ -48,6 +48,8 @@ public class TelefoneRepository {
 		List<Telefone> lista = new ArrayList<>();
 		String sql = "select * from telefone where usuario_dono =?";
 		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setLong(1, idDono);
 		
 		ResultSet resultSet = statement.executeQuery();
 		
