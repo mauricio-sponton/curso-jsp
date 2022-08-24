@@ -33,4 +33,14 @@
     <servlet-name>ServletUsuario</servlet-name>
     <url-pattern>/ServletUsuario</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ServletTelefone</display-name>
+    <servlet-name>ServletTelefone</servlet-name>
+    <servlet-class>br.com.mbs.cursojsp.servlets.ServletTelefone</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ServletTelefone</servlet-name>
+    <url-pattern>/ServletTelefone</url-pattern>
+  </servlet-mapping>
 </web-app>

@@ -235,6 +235,10 @@
 															<button class="btn waves-effect waves-light btn-success">Salvar</button>
 															<button class="btn waves-effect waves-light btn-danger"
 																type="button" onclick="deletarAjax();">Excluir</button>
+															
+															<c:if test="${usuarioSalvo.id > 0}">
+																<a href="<%= request.getContextPath() %>/ServletTelefone?idUsuario=${usuarioSalvo.id}" class="btn waves-effect waves-light btn-info" >Telefone</a>
+															</c:if>
 
 															<button type="button" class="btn btn-secondary"
 																data-toggle="modal" data-target="#modalPesquisarUsuario">
