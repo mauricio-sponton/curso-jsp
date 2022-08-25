@@ -100,6 +100,19 @@
 																</div>
 																
 															</div>
+															
+															<div class="form-group row">
+																<div class="col-sm-12">
+																	<div class="form-group form-default">
+																		<input type="text" name="rendaMensal" id="rendaMensal"
+																			value="${usuarioSalvo.rendaMensal}" class="form-control"
+																			required> <span class="form-bar"></span> <label
+																			class="float-label">Renda Mensal</label>
+																	</div>
+
+																</div>
+																
+															</div>
 
 															<div class="form-group row">
 																<div class="col-sm-12">
@@ -376,6 +389,26 @@
 
 		<jsp:include page="javascript.jsp"></jsp:include>
 		<script type="text/javascript">
+		
+		$('#rendaMensal').maskMoney({
+			showSymbol: true,
+			prefix: "R$ ",
+			decimal: ",",
+			thousands: "."
+		});
+		
+		const formatter = new Intl.NumberFormat('pt-BR', {
+			currency: 'BRL',
+			minimumFractionDigits: 2
+		});
+		
+		$('#rendaMensal').val(formatter.format($('#rendaMensal').val()));
+		$('#rendaMensal').focus();
+		
+		var dataNascimento = $('#dataNascimento').val();
+		var dateFormat = new Date(dataNascimento);
+		$('#dataNascimento').val(dateFormat.toLocaleDateString('pt-BR', {timeZone: 'UTC'}));
+		$('#nome').focus();
 		
 		$( function() {
 			  

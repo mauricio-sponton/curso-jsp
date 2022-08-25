@@ -13,6 +13,7 @@ public class Usuario implements Serializable {
 	private String login;
 	private String senha;
 	private Date dataNascimento;
+	private Double rendaMensal;
 	private boolean adm;
 	private String perfil;
 	private String sexo;
@@ -25,12 +26,20 @@ public class Usuario implements Serializable {
 	private String uf;
 	private String numero;
 
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
+
 	public void setDataNascimento(Date dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public Date getDataNascimento() {
-		return dataNascimento;
+	public Double getRendaMensal() {
+		return rendaMensal;
+	}
+
+	public void setRendaMensal(Double rendaMensal) {
+		this.rendaMensal = rendaMensal;
 	}
 
 	public String getCep() {

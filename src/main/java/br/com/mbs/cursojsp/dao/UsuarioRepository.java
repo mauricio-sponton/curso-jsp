@@ -22,7 +22,7 @@ public class UsuarioRepository {
 
 		if (usuario.naoExiste()) {
 
-			String sql = "insert into usuario (login, senha, nome, email, usuario_logado_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero, data_nascimento) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into usuario (login, senha, nome, email, usuario_logado_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero, data_nascimento, renda_mensal) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, usuario.getLogin());
@@ -39,6 +39,7 @@ public class UsuarioRepository {
 			statement.setString(12, usuario.getUf());
 			statement.setString(13, usuario.getNumero());
 			statement.setDate(14, usuario.getDataNascimento());
+			statement.setDouble(15, usuario.getRendaMensal());
 
 			statement.execute();
 
@@ -58,7 +59,7 @@ public class UsuarioRepository {
 
 		} else {
 
-			String sql = "update usuario set login=?, senha=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=?, data_nascimento=? where id= "
+			String sql = "update usuario set login=?, senha=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=?, data_nascimento=?, renda_mensal=? where id= "
 					+ usuario.getId() + "";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -75,6 +76,7 @@ public class UsuarioRepository {
 			statement.setString(11, usuario.getUf());
 			statement.setString(12, usuario.getNumero());
 			statement.setDate(13, usuario.getDataNascimento());
+			statement.setDouble(14, usuario.getRendaMensal());
 
 			statement.executeUpdate();
 
@@ -270,6 +272,8 @@ public class UsuarioRepository {
 			usuario.setLocalidade(resultado.getString("localidade"));
 			usuario.setUf(resultado.getString("uf"));
 			usuario.setNumero(resultado.getString("numero"));
+			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
+			usuario.setRendaMensal(resultado.getDouble("renda_mensal"));
 		}
 
 		return usuario;
@@ -301,6 +305,8 @@ public class UsuarioRepository {
 			usuario.setLocalidade(resultado.getString("localidade"));
 			usuario.setUf(resultado.getString("uf"));
 			usuario.setNumero(resultado.getString("numero"));
+			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
+			usuario.setRendaMensal(resultado.getDouble("renda_mensal"));
 		}
 
 		return usuario;
@@ -332,6 +338,8 @@ public class UsuarioRepository {
 			usuario.setLocalidade(resultado.getString("localidade"));
 			usuario.setUf(resultado.getString("uf"));
 			usuario.setNumero(resultado.getString("numero"));
+			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
+			usuario.setRendaMensal(resultado.getDouble("renda_mensal"));
 		}
 
 		return usuario;
@@ -364,6 +372,8 @@ public class UsuarioRepository {
 			usuario.setLocalidade(resultado.getString("localidade"));
 			usuario.setUf(resultado.getString("uf"));
 			usuario.setNumero(resultado.getString("numero"));
+			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
+			usuario.setRendaMensal(resultado.getDouble("renda_mensal"));
 		}
 
 		return usuario;
@@ -397,6 +407,8 @@ public class UsuarioRepository {
 			usuario.setLocalidade(resultado.getString("localidade"));
 			usuario.setUf(resultado.getString("uf"));
 			usuario.setNumero(resultado.getString("numero"));
+			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
+			usuario.setRendaMensal(resultado.getDouble("renda_mensal"));
 		}
 
 		return usuario;

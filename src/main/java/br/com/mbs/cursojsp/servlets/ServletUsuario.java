@@ -163,6 +163,10 @@ public class ServletUsuario extends ServletGenericUtil {
 			String uf = request.getParameter("uf");
 			String numero = request.getParameter("numero");
 			String dataNascimento = request.getParameter("dataNascimento");
+			String rendaMensal = request.getParameter("rendaMensal");
+			
+			rendaMensal = rendaMensal.split("\\ ")[1].replaceAll("\\.", "").replaceAll("\\,", ".");
+			Date dataConvertida = Date.valueOf(new SimpleDateFormat("yyyy-mm-dd").format(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento)));
 
 			Usuario usuario = new Usuario();
 
@@ -179,7 +183,8 @@ public class ServletUsuario extends ServletGenericUtil {
 			usuario.setLocalidade(localidade);
 			usuario.setUf(uf);
 			usuario.setNumero(numero);
-			usuario.setDataNascimento(new Date(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento).getTime()));
+			usuario.setDataNascimento(dataConvertida);
+			usuario.setRendaMensal(Double.parseDouble(rendaMensal));
 
 			if (ServletFileUpload.isMultipartContent(request)) {
 				Part part = request.getPart("fileFoto");
