@@ -25,21 +25,21 @@ public class ServletTelefone extends ServletGenericUtil {
 			throws ServletException, IOException {
 
 		try {
-			
+
 			String acao = request.getParameter("acao");
-			
-			if(acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluir")) {
-				
+
+			if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("excluir")) {
+
 				String id = request.getParameter("id");
 				String idDono = request.getParameter("idDono");
-				
+
 				telefoneRepository.deletar(Long.parseLong(id));
 				Usuario usuario = usuarioRepository.buscarPorId(Long.parseLong(idDono));
 				request.setAttribute("usuario", usuario);
-				
+
 				List<Telefone> lista = telefoneRepository.listar(usuario.getId());
 				request.setAttribute("lista", lista);
-				
+
 				request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
 				return;
 			}
@@ -50,10 +50,10 @@ public class ServletTelefone extends ServletGenericUtil {
 
 				Usuario usuario = usuarioRepository.buscarPorId(Long.parseLong(idUsuario));
 				request.setAttribute("usuario", usuario);
-				
+
 				List<Telefone> lista = telefoneRepository.listar(usuario.getId());
 				request.setAttribute("lista", lista);
-				
+
 				request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
 
 			} else {
@@ -78,21 +78,26 @@ public class ServletTelefone extends ServletGenericUtil {
 
 			String idDono = request.getParameter("id");
 			String numero = request.getParameter("numero");
-			
 			Usuario usuario = usuarioRepository.buscarPorId(Long.parseLong(idDono));
 
-			Telefone telefone = new Telefone();
-			telefone.setNumero(numero);
+			if (!telefoneRepository.existeTelefone(numero, Long.parseLong(idDono))) {
 
-			telefone.setUsuarioDono(usuario);
-			telefone.setUsuarioLogado(super.getUsuarioLogadoObject(request));
+				Telefone telefone = new Telefone();
+				telefone.setNumero(numero);
+
+				telefone.setUsuarioDono(usuario);
+				telefone.setUsuarioLogado(super.getUsuarioLogadoObject(request));
+
+				telefoneRepository.salvar(telefone);
+				request.setAttribute("msg", "Telefone cadastrado com sucesso!");
 			
-			telefoneRepository.salvar(telefone);
-			
+			} else {
+				request.setAttribute("msg", "Telefone já está cadastrado!");
+			}
+
 			List<Telefone> lista = telefoneRepository.listar(Long.parseLong(idDono));
 			request.setAttribute("lista", lista);
 			request.setAttribute("usuario", usuario);
-			request.setAttribute("msg", "Telefone cadastrado com sucesso!");
 			request.getRequestDispatcher("principal/telefone.jsp").forward(request, response);
 
 		} catch (NumberFormatException | SQLException e) {

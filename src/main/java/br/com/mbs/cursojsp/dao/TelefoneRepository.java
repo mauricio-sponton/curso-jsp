@@ -65,5 +65,18 @@ public class TelefoneRepository {
 		
 		return lista;
 	}
+	
+	public boolean existeTelefone(String numero, Long idUsuario) throws SQLException {
+		String sql = "select count(1) > 0 as existe from telefone where usuario_dono = ? and numero = ?";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		
+		statement.setLong(1, idUsuario);
+		statement.setString(2, numero);
+		
+		ResultSet resultado = statement.executeQuery();
+		resultado.next();
+		
+		return resultado.getBoolean("existe");
+	}
 
 }
