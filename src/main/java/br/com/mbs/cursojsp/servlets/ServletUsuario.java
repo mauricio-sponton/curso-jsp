@@ -1,6 +1,8 @@
 package br.com.mbs.cursojsp.servlets;
 
 import java.io.IOException;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.apache.tomcat.jakartaee.commons.compress.utils.IOUtils;
@@ -160,6 +162,7 @@ public class ServletUsuario extends ServletGenericUtil {
 			String localidade = request.getParameter("localidade");
 			String uf = request.getParameter("uf");
 			String numero = request.getParameter("numero");
+			String dataNascimento = request.getParameter("dataNascimento");
 
 			Usuario usuario = new Usuario();
 
@@ -176,6 +179,7 @@ public class ServletUsuario extends ServletGenericUtil {
 			usuario.setLocalidade(localidade);
 			usuario.setUf(uf);
 			usuario.setNumero(numero);
+			usuario.setDataNascimento(new Date(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento).getTime()));
 
 			if (ServletFileUpload.isMultipartContent(request)) {
 				Part part = request.getPart("fileFoto");
@@ -198,6 +202,11 @@ public class ServletUsuario extends ServletGenericUtil {
 			} else {
 				usuario = usuarioRepository.salvar(usuario, super.getUsuarioLogado(request));
 			}
+			
+			List<Usuario> lista = usuarioRepository.listarUsuarios(getUsuarioLogado(request));
+
+			request.setAttribute("totalPagina", usuarioRepository.totalPaginas(getUsuarioLogado(request)));
+			request.setAttribute("lista", lista);
 
 			request.setAttribute("msg", msg);
 			request.setAttribute("usuarioSalvo", usuario);

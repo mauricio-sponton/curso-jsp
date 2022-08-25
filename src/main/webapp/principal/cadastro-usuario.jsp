@@ -87,6 +87,19 @@
 
 																</div>
 															</div>
+															
+															<div class="form-group row">
+																<div class="col-sm-12">
+																	<div class="form-group form-default">
+																		<input type="text" name="dataNascimento" id="dataNascimento"
+																			value="${usuarioSalvo.dataNascimento}" class="form-control"
+																			required> <span class="form-bar"></span> <label
+																			class="float-label">Data de Nascimento</label>
+																	</div>
+
+																</div>
+																
+															</div>
 
 															<div class="form-group row">
 																<div class="col-sm-12">
@@ -363,6 +376,21 @@
 
 		<jsp:include page="javascript.jsp"></jsp:include>
 		<script type="text/javascript">
+		
+		$( function() {
+			  
+			  $("#dataNascimento").datepicker({
+				    dateFormat: 'dd/mm/yy',
+				    dayNames: ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'],
+				    dayNamesMin: ['D','S','T','Q','Q','S','S','D'],
+				    dayNamesShort: ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb','Dom'],
+				    monthNames: ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'],
+				    monthNamesShort: ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'],
+				    nextText: 'Próximo',
+				    prevText: 'Anterior'
+				});
+		} );
+		
 			function pesquisaCEP() {
 				var cep = $('#cep').val();
 

@@ -22,7 +22,7 @@ public class UsuarioRepository {
 
 		if (usuario.naoExiste()) {
 
-			String sql = "insert into usuario (login, senha, nome, email, usuario_logado_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			String sql = "insert into usuario (login, senha, nome, email, usuario_logado_id, perfil, sexo, cep, logradouro, bairro, localidade, uf, numero, data_nascimento) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
 			statement.setString(1, usuario.getLogin());
@@ -38,6 +38,7 @@ public class UsuarioRepository {
 			statement.setString(11, usuario.getLocalidade());
 			statement.setString(12, usuario.getUf());
 			statement.setString(13, usuario.getNumero());
+			statement.setDate(14, usuario.getDataNascimento());
 
 			statement.execute();
 
@@ -57,7 +58,7 @@ public class UsuarioRepository {
 
 		} else {
 
-			String sql = "update usuario set login=?, senha=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=? where id= "
+			String sql = "update usuario set login=?, senha=?, nome=?, email=?, perfil=?, sexo=?, cep=?, logradouro=?, bairro=?, localidade=?, uf=?, numero=?, data_nascimento=? where id= "
 					+ usuario.getId() + "";
 			PreparedStatement statement = connection.prepareStatement(sql);
 
@@ -73,6 +74,7 @@ public class UsuarioRepository {
 			statement.setString(10, usuario.getLocalidade());
 			statement.setString(11, usuario.getUf());
 			statement.setString(12, usuario.getNumero());
+			statement.setDate(13, usuario.getDataNascimento());
 
 			statement.executeUpdate();
 
