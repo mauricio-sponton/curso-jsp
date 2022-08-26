@@ -2,6 +2,8 @@ package br.com.mbs.cursojsp.model;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Usuario implements Serializable {
 
@@ -25,6 +27,15 @@ public class Usuario implements Serializable {
 	private String localidade;
 	private String uf;
 	private String numero;
+	private List<Telefone> telefones = new ArrayList<>();
+
+	public List<Telefone> getTelefones() {
+		return telefones;
+	}
+
+	public void setTelefones(List<Telefone> telefones) {
+		this.telefones = telefones;
+	}
 
 	public Date getDataNascimento() {
 		return dataNascimento;
@@ -176,6 +187,16 @@ public class Usuario implements Serializable {
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public String getTelefonesRelatorio() {
+		StringBuilder fone = new StringBuilder();
+		
+		for(Telefone t : telefones) {
+			fone.append(t.getNumero() + "\n");
+		}
+		
+		return fone.toString();
 	}
 
 }

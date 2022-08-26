@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.mbs.cursojsp.connection.SingleConnection;
+import br.com.mbs.cursojsp.model.Telefone;
 import br.com.mbs.cursojsp.model.Usuario;
 
 public class UsuarioRepository {
@@ -142,8 +143,7 @@ public class UsuarioRepository {
 
 		return pagina.intValue();
 	}
-	
-	
+
 	public List<Usuario> findAllUsuarios(Long usuarioLogado) throws SQLException {
 
 		List<Usuario> lista = new ArrayList<Usuario>();
@@ -162,12 +162,36 @@ public class UsuarioRepository {
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
 
+			usuario.setTelefones(this.listarTelefones(usuario.getId()));
+
 			lista.add(usuario);
 		}
 
 		return lista;
 	}
-	
+
+	public List<Telefone> listarTelefones(Long idDono) throws SQLException {
+
+		List<Telefone> lista = new ArrayList<>();
+		String sql = "select * from telefone where usuario_dono =?";
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		statement.setLong(1, idDono);
+
+		ResultSet resultSet = statement.executeQuery();
+
+		while (resultSet.next()) {
+
+			Telefone telefone = new Telefone();
+			telefone.setId(resultSet.getLong("id"));
+			telefone.setNumero(resultSet.getString("numero"));
+			telefone.setUsuarioDono(this.buscarPorId(resultSet.getLong("usuario_dono")));
+			telefone.setUsuarioLogado(this.buscarPorId(resultSet.getLong("usuario_logado")));
+			lista.add(telefone);
+		}
+
+		return lista;
+	}
 
 	public List<Usuario> listarUsuarios(Long usuarioLogado) throws SQLException {
 

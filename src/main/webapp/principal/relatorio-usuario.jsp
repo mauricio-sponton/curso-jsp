@@ -75,6 +75,9 @@
 																			<td><c:out value="${u.id}"></c:out></td>
 																			<td><c:out value="${u.nome}"></c:out></td>
 																		</tr>
+																		<tr>
+																			<td colspan="2"><c:out value="${u.telefonesRelatorio}"></c:out></td>
+																		</tr>
 																	</c:forEach>
 																</tbody>
 															</table>
