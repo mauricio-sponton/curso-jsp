@@ -2,6 +2,7 @@ package br.com.mbs.cursojsp.servlets;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -133,9 +134,16 @@ public class ServletUsuario extends ServletGenericUtil {
 
 				String dataInicial = request.getParameter("dataInicial");
 				String dataFinal = request.getParameter("dataFinal");
+				
 
-				if (dataInicial == null || dataInicial.isEmpty() && dataFinal == null || dataFinal.isEmpty()) {
-					request.setAttribute("listaUsuario", usuarioRepository.findAllUsuarios(super.getUsuarioLogado(request)));
+				request.setAttribute("listaUsuario", usuarioRepository.findAllUsuarios(super.getUsuarioLogado(request)));
+				
+				if (dataInicial != null && !dataInicial.isEmpty() && dataFinal != null && !dataFinal.isEmpty()) {
+					
+					Date dataInicialConvertida = converterData(dataInicial);
+					Date dataFinalConvertida = converterData(dataFinal);
+					request.setAttribute("listaUsuario", usuarioRepository.findAllUsuariosByDatas(super.getUsuarioLogado(request), dataInicialConvertida, dataFinalConvertida));
+				
 				}
 
 				request.setAttribute("dataInicial", dataInicial);
@@ -180,8 +188,7 @@ public class ServletUsuario extends ServletGenericUtil {
 			String rendaMensal = request.getParameter("rendaMensal");
 
 			rendaMensal = rendaMensal.split("\\ ")[1].replaceAll("\\.", "").replaceAll("\\,", ".");
-			Date dataConvertida = Date.valueOf(new SimpleDateFormat("yyyy-mm-dd")
-					.format(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento)));
+			Date dataConvertida = converterData(dataNascimento);
 
 			Usuario usuario = new Usuario();
 
@@ -240,6 +247,11 @@ public class ServletUsuario extends ServletGenericUtil {
 			redirecionar.forward(request, response);
 		}
 
+	}
+
+	private Date converterData(String dataNascimento) throws ParseException {
+		return Date.valueOf(new SimpleDateFormat("yyyy-mm-dd")
+				.format(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento)));
 	}
 
 }

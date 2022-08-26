@@ -190,13 +190,13 @@ public class Usuario implements Serializable {
 	}
 	
 	public String getTelefonesRelatorio() {
-		StringBuilder fone = new StringBuilder();
+		String fone = "";
 		
 		for(Telefone t : telefones) {
-			fone.append(t.getNumero() + "\n");
+			fone += t.getNumero() + "\n";
 		}
 		
-		return fone.toString();
+		return fone;
 	}
 
 }

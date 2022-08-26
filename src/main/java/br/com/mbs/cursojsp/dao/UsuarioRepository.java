@@ -1,6 +1,7 @@
 package br.com.mbs.cursojsp.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -170,6 +171,33 @@ public class UsuarioRepository {
 		return lista;
 	}
 
+	public List<Usuario> findAllUsuariosByDatas(Long usuarioLogado, Date dataInicialConvertida, Date dataFinalConvertida) throws SQLException {
+
+		List<Usuario> lista = new ArrayList<Usuario>();
+
+		String sql = "select * from usuario where adm is false and usuario_logado_id = " + usuarioLogado + " and data_nascimento >= ? and data_nascimento <= ?";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setDate(1, dataInicialConvertida);
+		statement.setDate(2, dataFinalConvertida);
+
+		ResultSet resultado = statement.executeQuery();
+
+		while (resultado.next()) {
+			Usuario usuario = new Usuario();
+			usuario.setId(resultado.getLong("id"));
+			usuario.setNome(resultado.getString("nome"));
+			usuario.setEmail(resultado.getString("email"));
+			usuario.setLogin(resultado.getString("login"));
+			usuario.setPerfil(resultado.getString("perfil"));
+			usuario.setSexo(resultado.getString("sexo"));
+
+			usuario.setTelefones(this.listarTelefones(usuario.getId()));
+
+			lista.add(usuario);
+		}
+
+		return lista;
+	}
 	public List<Telefone> listarTelefones(Long idDono) throws SQLException {
 
 		List<Telefone> lista = new ArrayList<>();
