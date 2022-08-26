@@ -128,6 +128,16 @@ public class ServletUsuario extends ServletGenericUtil {
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
 
 			}
+			
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorio")) {
+				
+				String dataInicial = request.getParameter("dataInicial");
+				String dataFinal = request.getParameter("dataFinal");
+				
+				request.setAttribute("dataInicial", dataInicial);
+				request.setAttribute("dataFinal", dataFinal);
+				request.getRequestDispatcher("principal/relatorio-usuario.jsp").forward(request, response);
+			}
 
 			else {
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
