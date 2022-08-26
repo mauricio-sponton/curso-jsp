@@ -128,12 +128,16 @@ public class ServletUsuario extends ServletGenericUtil {
 				request.getRequestDispatcher("principal/cadastro-usuario.jsp").forward(request, response);
 
 			}
-			
+
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirRelatorio")) {
-				
+
 				String dataInicial = request.getParameter("dataInicial");
 				String dataFinal = request.getParameter("dataFinal");
-				
+
+				if (dataInicial == null || dataInicial.isEmpty() && dataFinal == null || dataFinal.isEmpty()) {
+					request.setAttribute("listaUsuario", usuarioRepository.findAllUsuarios(super.getUsuarioLogado(request)));
+				}
+
 				request.setAttribute("dataInicial", dataInicial);
 				request.setAttribute("dataFinal", dataFinal);
 				request.getRequestDispatcher("principal/relatorio-usuario.jsp").forward(request, response);
@@ -174,9 +178,10 @@ public class ServletUsuario extends ServletGenericUtil {
 			String numero = request.getParameter("numero");
 			String dataNascimento = request.getParameter("dataNascimento");
 			String rendaMensal = request.getParameter("rendaMensal");
-			
+
 			rendaMensal = rendaMensal.split("\\ ")[1].replaceAll("\\.", "").replaceAll("\\,", ".");
-			Date dataConvertida = Date.valueOf(new SimpleDateFormat("yyyy-mm-dd").format(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento)));
+			Date dataConvertida = Date.valueOf(new SimpleDateFormat("yyyy-mm-dd")
+					.format(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento)));
 
 			Usuario usuario = new Usuario();
 
@@ -217,7 +222,7 @@ public class ServletUsuario extends ServletGenericUtil {
 			} else {
 				usuario = usuarioRepository.salvar(usuario, super.getUsuarioLogado(request));
 			}
-			
+
 			List<Usuario> lista = usuarioRepository.listarUsuarios(getUsuarioLogado(request));
 
 			request.setAttribute("totalPagina", usuarioRepository.totalPaginas(getUsuarioLogado(request)));

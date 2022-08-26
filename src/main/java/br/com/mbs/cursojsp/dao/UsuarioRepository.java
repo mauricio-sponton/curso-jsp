@@ -142,6 +142,32 @@ public class UsuarioRepository {
 
 		return pagina.intValue();
 	}
+	
+	
+	public List<Usuario> findAllUsuarios(Long usuarioLogado) throws SQLException {
+
+		List<Usuario> lista = new ArrayList<Usuario>();
+
+		String sql = "select * from usuario where adm is false and usuario_logado_id = " + usuarioLogado;
+		PreparedStatement statement = connection.prepareStatement(sql);
+
+		ResultSet resultado = statement.executeQuery();
+
+		while (resultado.next()) {
+			Usuario usuario = new Usuario();
+			usuario.setId(resultado.getLong("id"));
+			usuario.setNome(resultado.getString("nome"));
+			usuario.setEmail(resultado.getString("email"));
+			usuario.setLogin(resultado.getString("login"));
+			usuario.setPerfil(resultado.getString("perfil"));
+			usuario.setSexo(resultado.getString("sexo"));
+
+			lista.add(usuario);
+		}
+
+		return lista;
+	}
+	
 
 	public List<Usuario> listarUsuarios(Long usuarioLogado) throws SQLException {
 
