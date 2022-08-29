@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.mbs.cursojsp.dao.UsuarioRepository;
 import br.com.mbs.cursojsp.model.Usuario;
+import br.com.mbs.cursojsp.util.ReportUtils;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -134,21 +135,47 @@ public class ServletUsuario extends ServletGenericUtil {
 
 				String dataInicial = request.getParameter("dataInicial");
 				String dataFinal = request.getParameter("dataFinal");
-				
 
-				request.setAttribute("listaUsuario", usuarioRepository.findAllUsuarios(super.getUsuarioLogado(request)));
-				
+				request.setAttribute("listaUsuario",
+						usuarioRepository.findAllUsuarios(super.getUsuarioLogado(request)));
+
 				if (dataInicial != null && !dataInicial.isEmpty() && dataFinal != null && !dataFinal.isEmpty()) {
-					
+
 					Date dataInicialConvertida = converterData(dataInicial);
 					Date dataFinalConvertida = converterData(dataFinal);
-					request.setAttribute("listaUsuario", usuarioRepository.findAllUsuariosByDatas(super.getUsuarioLogado(request), dataInicialConvertida, dataFinalConvertida));
-				
+					request.setAttribute("listaUsuario", usuarioRepository.findAllUsuariosByDatas(
+							super.getUsuarioLogado(request), dataInicialConvertida, dataFinalConvertida));
+
 				}
 
 				request.setAttribute("dataInicial", dataInicial);
 				request.setAttribute("dataFinal", dataFinal);
 				request.getRequestDispatcher("principal/relatorio-usuario.jsp").forward(request, response);
+			}
+
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("imprimirPdf")) {
+
+				String dataInicial = request.getParameter("dataInicial");
+				String dataFinal = request.getParameter("dataFinal");
+
+				List<Usuario> lista = usuarioRepository.findAllUsuarios(super.getUsuarioLogado(request));
+
+				if (dataInicial != null && !dataInicial.isEmpty() && dataFinal != null && !dataFinal.isEmpty()) {
+
+					Date dataInicialConvertida = converterData(dataInicial);
+					Date dataFinalConvertida = converterData(dataFinal);
+
+					lista = usuarioRepository.findAllUsuariosByDatas(super.getUsuarioLogado(request),
+							dataInicialConvertida, dataFinalConvertida);
+
+				}
+				byte[] relatorio = new ReportUtils().geraRelatorioPDF(lista, "relatorio-usuario",
+						request.getServletContext());
+				
+				response.setHeader("Content-Disposition", "attachment;filename=arquivo.pdf");
+				new Base64();
+				response.getOutputStream().write(relatorio);
+
 			}
 
 			else {
@@ -250,8 +277,8 @@ public class ServletUsuario extends ServletGenericUtil {
 	}
 
 	private Date converterData(String dataNascimento) throws ParseException {
-		return Date.valueOf(new SimpleDateFormat("yyyy-mm-dd")
-				.format(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento)));
+		return Date.valueOf(
+				new SimpleDateFormat("yyyy-mm-dd").format(new SimpleDateFormat("dd/mm/yyyy").parse(dataNascimento)));
 	}
 
 }

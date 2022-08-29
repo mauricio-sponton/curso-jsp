@@ -39,7 +39,7 @@
 															action="<%=request.getContextPath()%>/ServletUsuario"
 															method="get">
 
-															<input type="hidden" name="acao"
+															<input type="hidden" name="acao" id = "acaoRelatorio"
 																value="imprimirRelatorio">
 
 															<div class="form-group row">
@@ -57,7 +57,8 @@
 																</div>
 															</div>
 
-															<button type="submit" class="btn btn-primary mb-2">Imprimir</button>
+															<button type="button" onclick="imprimirHtml()" class="btn btn-primary mb-2">Imprimir</button>
+															<button type="button" onclick="imprimirPdf()" class="btn btn-primary mb-2">PDF</button>
 														</form>
 
 
@@ -103,6 +104,17 @@
 
 	<jsp:include page="javascript.jsp"></jsp:include>
 	<script type="text/javascript">
+		
+		function imprimirHtml(){
+			$('#acaoRelatorio').val("imprimirRelatorio");
+			$('#formUsuario').submit();
+		}
+		
+		function imprimirPdf(){
+			$('#acaoRelatorio').val("imprimirPdf");
+			$('#formUsuario').submit();
+		}
+	
 		$(function() {
 
 			$("#dataInicial, #dataFinal")

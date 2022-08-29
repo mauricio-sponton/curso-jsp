@@ -162,6 +162,7 @@ public class UsuarioRepository {
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
+			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
 
 			usuario.setTelefones(this.listarTelefones(usuario.getId()));
 
@@ -190,6 +191,7 @@ public class UsuarioRepository {
 			usuario.setLogin(resultado.getString("login"));
 			usuario.setPerfil(resultado.getString("perfil"));
 			usuario.setSexo(resultado.getString("sexo"));
+			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
 
 			usuario.setTelefones(this.listarTelefones(usuario.getId()));
 
