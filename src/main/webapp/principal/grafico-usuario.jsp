@@ -35,7 +35,7 @@
 														<h5>Relatório de usuário</h5>
 													</div>
 													<div class="card-block">
-														<form class="form-material" id="formUsuario"
+														<form class="form-material" id="formGrafico"
 															action="<%=request.getContextPath()%>/ServletUsuario"
 															method="get">
 
@@ -62,7 +62,7 @@
 														</form>
 
 
-														<div style="overflow-y: scroll; height: 600px">
+														<div style="overflow-y: scroll; height: auto">
 															<div>
 																<canvas id="myChart"></canvas>
 															</div>
@@ -89,23 +89,39 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script type="text/javascript">
 		
+		var urlAction = document.getElementById('formGrafico').action;
+		var dataInicial = document.getElementById('dataInicial').value;
+		var dataFinal = document.getElementById('dataFinal').value;
+		
+		$.ajax({
+			
+			method: "get",
+			url: urlAction,
+			data: "dataInicial=" + dataInicial + "&dataFinal=" + dataFinal + "&acao=graficoMediaSalarial",
+			success: function(response){
+				var json = JSON.parse(response);
+				const myChart = new Chart(document.getElementById('myChart'),
+						{
+					type : 'line',
+					data :{
+						labels : json.perfis,
+						datasets : [ {
+							label : 'Média salarial por tipo',
+							backgroundColor : 'rgb(255, 99, 132)',
+							borderColor : 'rgb(255, 99, 132)',
+							data : json.salarios,
+						} ]
+					},
+					options : {}
+				});
+			}
+			
+			
+		}).fail(function(xhr, status, errorThrow){
+			alert('Erro ao gerar gráfico ' +xhr.responseText)
+		});
 
 		function gerarGrafico() {
-			const myChart = new Chart(document.getElementById('myChart'),
-					{
-				type : 'line',
-				data :{
-					labels : [ 'January', 'February', 'March', 'April', 'May',
-						'June', ],
-					datasets : [ {
-						label : 'Média salarial por tipo',
-						backgroundColor : 'rgb(255, 99, 132)',
-						borderColor : 'rgb(255, 99, 132)',
-						data : [ 0, 10, 5, 2, 20, 30, 45 ],
-					} ]
-				},
-				options : {}
-			});
 		}
 
 		$(function() {

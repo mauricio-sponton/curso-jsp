@@ -15,6 +15,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import br.com.mbs.cursojsp.dao.UsuarioRepository;
+import br.com.mbs.cursojsp.dto.GraficoSalarioUsuarioDTO;
 import br.com.mbs.cursojsp.model.Usuario;
 import br.com.mbs.cursojsp.util.ReportUtils;
 import jakarta.servlet.RequestDispatcher;
@@ -195,6 +196,27 @@ public class ServletUsuario extends ServletGenericUtil {
 				new Base64();
 				response.getOutputStream().write(relatorio);
 
+			}
+			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("graficoMediaSalarial")) {
+				String dataInicial = request.getParameter("dataInicial");
+				String dataFinal = request.getParameter("dataFinal");
+				
+				GraficoSalarioUsuarioDTO dto = usuarioRepository.graficoMediaSalarial(getUsuarioLogado(request));
+				
+				if (dataInicial != null && !dataInicial.isEmpty() && dataFinal != null && !dataFinal.isEmpty()) {
+
+					Date dataInicialConvertida = converterData(dataInicial);
+					Date dataFinalConvertida = converterData(dataFinal);
+
+					dto = null;
+					System.out.println("AQUI");
+
+				}
+				
+				ObjectMapper mapper = new ObjectMapper();
+				String json = mapper.writeValueAsString(dto);
+				response.getWriter().write(json);
+				
 			}
 
 			else {
