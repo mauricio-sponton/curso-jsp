@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.mbs.cursojsp.connection.SingleConnection;
+import br.com.mbs.cursojsp.dto.GraficoSalarioUsuarioDTO;
 import br.com.mbs.cursojsp.model.Telefone;
 import br.com.mbs.cursojsp.model.Usuario;
 
@@ -514,6 +515,34 @@ public class UsuarioRepository {
 		statement.executeUpdate();
 		connection.commit();
 
+	}
+	
+	public GraficoSalarioUsuarioDTO graficoMediaSalarial(Long usuarioLogado) throws SQLException{
+		
+		String sql = "select avg(renda_mensal) as media_salarial, perfil from usuario where usuario_logado_id = ? group by perfil";
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setLong(1, usuarioLogado);
+		
+		ResultSet resultado = statement.executeQuery();
+		
+		List<String> perfis = new ArrayList<>();
+		List<Double> salarios = new ArrayList<>();
+		
+		GraficoSalarioUsuarioDTO dto = new GraficoSalarioUsuarioDTO();
+		
+		while(resultado.next()) {
+			Double medialSalarial = resultado.getDouble("media_salarial");
+			String perfil = resultado.getString("perfil");
+			
+			perfis.add(perfil);
+			salarios.add(medialSalarial);
+		}
+		
+		dto.setPerfis(perfis);
+		dto.setSalarios(salarios);
+		
+		return dto;
+		
 	}
 
 }
