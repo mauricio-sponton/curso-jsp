@@ -59,6 +59,7 @@
 
 															<button type="button" onclick="imprimirHtml()" class="btn btn-primary mb-2">Imprimir</button>
 															<button type="button" onclick="imprimirPdf()" class="btn btn-primary mb-2">PDF</button>
+															<button type="button" onclick="imprimirExcel()" class="btn btn-primary mb-2">Excel</button>
 														</form>
 
 
@@ -112,6 +113,11 @@
 		
 		function imprimirPdf(){
 			$('#acaoRelatorio').val("imprimirPdf");
+			$('#formUsuario').submit();
+		}
+		
+		function imprimirExcel(){
+			$('#acaoRelatorio').val("imprimirExcel");
 			$('#formUsuario').submit();
 		}
 	
