@@ -15,12 +15,12 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 public class ReportUtils implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	public byte[] geraRelatorioPDF(List<?> listaDados, String nomeRelatorio, ServletContext servletContext) throws JRException {
+	public byte[] geraRelatorioPDF(List<?> listaDados, String nomeRelatorio, HashMap<String, Object> params ,ServletContext servletContext) throws JRException {
 		
 		var dataSource = new JRBeanCollectionDataSource(listaDados);
 		
 		String caminhoJasper = servletContext.getRealPath("relatorios") + File.separator + nomeRelatorio + ".jasper";
-		JasperPrint print = JasperFillManager.fillReport(caminhoJasper, new HashMap<>(), dataSource);
+		JasperPrint print = JasperFillManager.fillReport(caminhoJasper, params, dataSource);
 		
 		return JasperExportManager.exportReportToPdf(print);
 	}

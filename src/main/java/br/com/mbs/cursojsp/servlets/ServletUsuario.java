@@ -1,9 +1,11 @@
 package br.com.mbs.cursojsp.servlets;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.tomcat.jakartaee.commons.compress.utils.IOUtils;
@@ -169,7 +171,11 @@ public class ServletUsuario extends ServletGenericUtil {
 							dataInicialConvertida, dataFinalConvertida);
 
 				}
-				byte[] relatorio = new ReportUtils().geraRelatorioPDF(lista, "relatorio-usuario",
+				
+				HashMap<String, Object> params = new HashMap<>();
+				params.put("PARAM_SUBREPORT", request.getServletContext().getRealPath("relatorios") + File.separator);
+				
+				byte[] relatorio = new ReportUtils().geraRelatorioPDF(lista, "relatorio-usuario", params,
 						request.getServletContext());
 				
 				response.setHeader("Content-Disposition", "attachment;filename=arquivo.pdf");

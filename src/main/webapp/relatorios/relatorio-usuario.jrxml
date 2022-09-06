@@ -2,11 +2,44 @@
 <!-- Created with Jaspersoft Studio version 6.16.0.final using JasperReports Library version 6.16.0-48579d909b7943b64690c65c71e07e0b80981928  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio-usuario" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="49067577-7d40-465a-bd90-a6416c015646">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="PARAM_SUBREPORT" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<field name="nome" class="java.lang.String"/>
 	<field name="dataNascimento" class="java.sql.Date"/>
+	<field name="telefones" class="java.util.List"/>
+	<group name="grupo_user">
+		<groupExpression><![CDATA[$F{nome}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField>
+					<reportElement x="0" y="0" width="280" height="30" uuid="c49b5245-74f7-41c6-8704-a9d035b1d9dd">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3cb7900e-3c7d-4a9a-8a85-cc4fcd355e43"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+				</textField>
+				<textField pattern="d/MM/yyyy">
+					<reportElement x="280" y="0" width="275" height="30" uuid="38bb2fbd-5bed-48a7-9afa-c2a19463741d">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="45dbe22f-9017-4fd5-8251-c927f46f3d6b"/>
+					</reportElement>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textFieldExpression><![CDATA[$F{dataNascimento}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
 	<title>
 		<band height="79" splitType="Stretch">
 			<staticText>
@@ -49,31 +82,12 @@
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="30" splitType="Stretch">
-			<textField>
-				<reportElement x="0" y="0" width="280" height="30" uuid="c49b5245-74f7-41c6-8704-a9d035b1d9dd">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3cb7900e-3c7d-4a9a-8a85-cc4fcd355e43"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
-			</textField>
-			<textField pattern="d/MM/yyyy">
-				<reportElement x="280" y="0" width="275" height="30" uuid="38bb2fbd-5bed-48a7-9afa-c2a19463741d">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="45dbe22f-9017-4fd5-8251-c927f46f3d6b"/>
-				</reportElement>
-				<box>
-					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
-				</box>
-				<textFieldExpression><![CDATA[$F{dataNascimento}]]></textFieldExpression>
-			</textField>
+		<band height="35" splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="555" height="35" uuid="63c0cd62-1e7e-41fd-8dc5-98cbbfa85160"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{telefones})]]></dataSourceExpression>
+				<subreportExpression><![CDATA[$P{PARAM_SUBREPORT} + "subreport-user.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 </jasperReport>
