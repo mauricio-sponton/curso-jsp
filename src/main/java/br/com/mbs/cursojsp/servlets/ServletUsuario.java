@@ -200,16 +200,15 @@ public class ServletUsuario extends ServletGenericUtil {
 			else if (acao != null && !acao.isEmpty() && acao.equalsIgnoreCase("graficoMediaSalarial")) {
 				String dataInicial = request.getParameter("dataInicial");
 				String dataFinal = request.getParameter("dataFinal");
+				System.out.println(dataInicial);
 				
 				GraficoSalarioUsuarioDTO dto = usuarioRepository.graficoMediaSalarial(getUsuarioLogado(request));
 				
 				if (dataInicial != null && !dataInicial.isEmpty() && dataFinal != null && !dataFinal.isEmpty()) {
-
+					System.out.println("AQUI");
 					Date dataInicialConvertida = converterData(dataInicial);
 					Date dataFinalConvertida = converterData(dataFinal);
-
-					dto = null;
-					System.out.println("AQUI");
+					dto = usuarioRepository.graficoMediaSalarial(getUsuarioLogado(request), dataInicialConvertida ,dataFinalConvertida);
 
 				}
 				

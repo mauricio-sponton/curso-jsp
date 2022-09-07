@@ -89,10 +89,14 @@
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script type="text/javascript">
 		
-		var urlAction = document.getElementById('formGrafico').action;
-		var dataInicial = document.getElementById('dataInicial').value;
-		var dataFinal = document.getElementById('dataFinal').value;
 		
+		var myChart = new Chart(document.getElementById('myChart'));
+		
+		function gerarGrafico() {
+		var urlAction = document.getElementById('formGrafico').action;
+		var dataInicial = $('#dataInicial').val();
+		
+		var dataFinal = document.getElementById('dataFinal').value;
 		$.ajax({
 			
 			method: "get",
@@ -100,7 +104,8 @@
 			data: "dataInicial=" + dataInicial + "&dataFinal=" + dataFinal + "&acao=graficoMediaSalarial",
 			success: function(response){
 				var json = JSON.parse(response);
-				const myChart = new Chart(document.getElementById('myChart'),
+				myChart.destroy();
+				myChart = new Chart(document.getElementById('myChart'),
 						{
 					type : 'line',
 					data :{
@@ -121,7 +126,6 @@
 			alert('Erro ao gerar gráfico ' +xhr.responseText)
 		});
 
-		function gerarGrafico() {
 		}
 
 		$(function() {

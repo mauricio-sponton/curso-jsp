@@ -173,11 +173,13 @@ public class UsuarioRepository {
 		return lista;
 	}
 
-	public List<Usuario> findAllUsuariosByDatas(Long usuarioLogado, Date dataInicialConvertida, Date dataFinalConvertida) throws SQLException {
+	public List<Usuario> findAllUsuariosByDatas(Long usuarioLogado, Date dataInicialConvertida,
+			Date dataFinalConvertida) throws SQLException {
 
 		List<Usuario> lista = new ArrayList<Usuario>();
 
-		String sql = "select * from usuario where adm is false and usuario_logado_id = " + usuarioLogado + " and data_nascimento >= ? and data_nascimento <= ?";
+		String sql = "select * from usuario where adm is false and usuario_logado_id = " + usuarioLogado
+				+ " and data_nascimento >= ? and data_nascimento <= ?";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setDate(1, dataInicialConvertida);
 		statement.setDate(2, dataFinalConvertida);
@@ -201,6 +203,7 @@ public class UsuarioRepository {
 
 		return lista;
 	}
+
 	public List<Telefone> listarTelefones(Long idDono) throws SQLException {
 
 		List<Telefone> lista = new ArrayList<>();
@@ -516,33 +519,65 @@ public class UsuarioRepository {
 		connection.commit();
 
 	}
-	
-	public GraficoSalarioUsuarioDTO graficoMediaSalarial(Long usuarioLogado) throws SQLException{
-		
+
+	public GraficoSalarioUsuarioDTO graficoMediaSalarial(Long usuarioLogado) throws SQLException {
+
 		String sql = "select avg(renda_mensal) as media_salarial, perfil from usuario where usuario_logado_id = ? group by perfil";
 		PreparedStatement statement = connection.prepareStatement(sql);
 		statement.setLong(1, usuarioLogado);
-		
+
 		ResultSet resultado = statement.executeQuery();
-		
+
 		List<String> perfis = new ArrayList<>();
 		List<Double> salarios = new ArrayList<>();
-		
+
 		GraficoSalarioUsuarioDTO dto = new GraficoSalarioUsuarioDTO();
-		
-		while(resultado.next()) {
+
+		while (resultado.next()) {
 			Double medialSalarial = resultado.getDouble("media_salarial");
 			String perfil = resultado.getString("perfil");
-			
+
 			perfis.add(perfil);
 			salarios.add(medialSalarial);
 		}
-		
+
 		dto.setPerfis(perfis);
 		dto.setSalarios(salarios);
-		
+
 		return dto;
-		
+
+	}
+
+	public GraficoSalarioUsuarioDTO graficoMediaSalarial(Long usuarioLogado, Date dataInicialConvertida,
+			Date dataFinalConvertida) throws SQLException {
+
+		String sql = "select avg(renda_mensal) as media_salarial, perfil from usuario where usuario_logado_id = ? and data_nascimento >= ? and data_nascimento <= ? group by perfil";
+
+		PreparedStatement statement = connection.prepareStatement(sql);
+		statement.setLong(1, usuarioLogado);
+		statement.setDate(2, dataInicialConvertida);
+		statement.setDate(3, dataFinalConvertida);
+
+		ResultSet resultado = statement.executeQuery();
+
+		List<String> perfis = new ArrayList<>();
+		List<Double> salarios = new ArrayList<>();
+
+		GraficoSalarioUsuarioDTO dto = new GraficoSalarioUsuarioDTO();
+
+		while (resultado.next()) {
+			Double medialSalarial = resultado.getDouble("media_salarial");
+			String perfil = resultado.getString("perfil");
+
+			perfis.add(perfil);
+			salarios.add(medialSalarial);
+		}
+
+		dto.setPerfis(perfis);
+		dto.setSalarios(salarios);
+
+		return dto;
+
 	}
 
 }
