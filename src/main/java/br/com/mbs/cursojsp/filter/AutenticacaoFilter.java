@@ -1,10 +1,15 @@
 package br.com.mbs.cursojsp.filter;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 import br.com.mbs.cursojsp.connection.SingleConnection;
+import br.com.mbs.cursojsp.dao.VersionadorBDRepository;
 import jakarta.servlet.Filter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.FilterConfig;
@@ -58,11 +63,11 @@ public class AutenticacaoFilter extends HttpFilter implements Filter {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 			RequestDispatcher redirecionar = request.getRequestDispatcher("/erro.jsp");
 			request.setAttribute("msg", e.getMessage());
 			redirecionar.forward(request, response);
-			
+
 			try {
 				connection.rollback();
 			} catch (SQLException e1) {
@@ -74,6 +79,40 @@ public class AutenticacaoFilter extends HttpFilter implements Filter {
 
 	public void init(FilterConfig fConfig) throws ServletException {
 		connection = SingleConnection.getConnection();
+		VersionadorBDRepository versionadorBDRepository = new VersionadorBDRepository();
+
+		String pastaSQL = fConfig.getServletContext().getRealPath("versionador-sql") + File.separator;
+
+		File[] files = new File(pastaSQL).listFiles();
+
+		try {
+			for (File file : files) {
+				boolean isArquivoExecutado = versionadorBDRepository.arquivoSQLExecutado(file.getName());
+				if(!isArquivoExecutado) {
+					
+					FileInputStream entrada = new FileInputStream(file);
+					Scanner lerArquivo = new Scanner(entrada, "UTF-8");
+					
+					StringBuilder sql = new StringBuilder();
+					
+					while(lerArquivo.hasNext()) {
+						sql.append(lerArquivo.nextLine());
+						sql.append("\n");
+					}
+					connection.prepareStatement(sql.toString()).execute();
+					versionadorBDRepository.gravar(file.getName());
+					connection.commit();
+					lerArquivo.close();
+				}
+			}
+		} catch (SQLException | FileNotFoundException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}
 	}
 
 }

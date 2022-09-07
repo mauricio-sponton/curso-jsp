@@ -1,0 +1,1 @@
+alter table usuario add column cpf character varying(200);
