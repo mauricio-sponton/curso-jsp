@@ -113,13 +113,7 @@ public class UsuarioRepository {
 
 		while (resultado.next()) {
 			Usuario usuario = new Usuario();
-			usuario.setId(resultado.getLong("id"));
-			usuario.setNome(resultado.getString("nome"));
-			usuario.setEmail(resultado.getString("email"));
-			usuario.setLogin(resultado.getString("login"));
-			usuario.setPerfil(resultado.getString("perfil"));
-			usuario.setSexo(resultado.getString("sexo"));
-
+			toModelUsuario(resultado, usuario);
 			lista.add(usuario);
 		}
 
@@ -156,15 +150,9 @@ public class UsuarioRepository {
 		ResultSet resultado = statement.executeQuery();
 
 		while (resultado.next()) {
+			
 			Usuario usuario = new Usuario();
-			usuario.setId(resultado.getLong("id"));
-			usuario.setNome(resultado.getString("nome"));
-			usuario.setEmail(resultado.getString("email"));
-			usuario.setLogin(resultado.getString("login"));
-			usuario.setPerfil(resultado.getString("perfil"));
-			usuario.setSexo(resultado.getString("sexo"));
-			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
-
+			toModelUsuario(resultado, usuario);
 			usuario.setTelefones(this.listarTelefones(usuario.getId()));
 
 			lista.add(usuario);
@@ -187,15 +175,9 @@ public class UsuarioRepository {
 		ResultSet resultado = statement.executeQuery();
 
 		while (resultado.next()) {
+			
 			Usuario usuario = new Usuario();
-			usuario.setId(resultado.getLong("id"));
-			usuario.setNome(resultado.getString("nome"));
-			usuario.setEmail(resultado.getString("email"));
-			usuario.setLogin(resultado.getString("login"));
-			usuario.setPerfil(resultado.getString("perfil"));
-			usuario.setSexo(resultado.getString("sexo"));
-			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
-
+			toModelUsuario(resultado, usuario);
 			usuario.setTelefones(this.listarTelefones(usuario.getId()));
 
 			lista.add(usuario);
@@ -237,14 +219,9 @@ public class UsuarioRepository {
 		ResultSet resultado = statement.executeQuery();
 
 		while (resultado.next()) {
+			
 			Usuario usuario = new Usuario();
-			usuario.setId(resultado.getLong("id"));
-			usuario.setNome(resultado.getString("nome"));
-			usuario.setEmail(resultado.getString("email"));
-			usuario.setLogin(resultado.getString("login"));
-			usuario.setPerfil(resultado.getString("perfil"));
-			usuario.setSexo(resultado.getString("sexo"));
-
+			toModelUsuario(resultado, usuario);
 			lista.add(usuario);
 		}
 
@@ -264,14 +241,9 @@ public class UsuarioRepository {
 		ResultSet resultado = statement.executeQuery();
 
 		while (resultado.next()) {
+			
 			Usuario usuario = new Usuario();
-			usuario.setId(resultado.getLong("id"));
-			usuario.setNome(resultado.getString("nome"));
-			usuario.setEmail(resultado.getString("email"));
-			usuario.setLogin(resultado.getString("login"));
-			usuario.setPerfil(resultado.getString("perfil"));
-			usuario.setSexo(resultado.getString("sexo"));
-
+			toModelUsuario(resultado, usuario);
 			lista.add(usuario);
 		}
 
@@ -293,14 +265,9 @@ public class UsuarioRepository {
 		ResultSet resultado = statement.executeQuery();
 
 		while (resultado.next()) {
+			
 			Usuario usuario = new Usuario();
-			usuario.setId(resultado.getLong("id"));
-			usuario.setNome(resultado.getString("nome"));
-			usuario.setEmail(resultado.getString("email"));
-			usuario.setLogin(resultado.getString("login"));
-			usuario.setPerfil(resultado.getString("perfil"));
-			usuario.setSexo(resultado.getString("sexo"));
-
+			toModelUsuario(resultado, usuario);
 			lista.add(usuario);
 		}
 
@@ -341,27 +308,12 @@ public class UsuarioRepository {
 
 		while (resultado.next()) {
 
-			usuario.setId(resultado.getLong("id"));
-			usuario.setNome(resultado.getString("nome"));
-			usuario.setEmail(resultado.getString("email"));
-			usuario.setLogin(resultado.getString("login"));
-			usuario.setSenha(resultado.getString("senha"));
-			usuario.setAdm(resultado.getBoolean("adm"));
-			usuario.setPerfil(resultado.getString("perfil"));
-			usuario.setSexo(resultado.getString("sexo"));
-			usuario.setFoto(resultado.getString("foto"));
-			usuario.setCep(resultado.getString("cep"));
-			usuario.setLogradouro(resultado.getString("logradouro"));
-			usuario.setBairro(resultado.getString("bairro"));
-			usuario.setLocalidade(resultado.getString("localidade"));
-			usuario.setUf(resultado.getString("uf"));
-			usuario.setNumero(resultado.getString("numero"));
-			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
-			usuario.setRendaMensal(resultado.getDouble("renda_mensal"));
+			toModelUsuario(resultado, usuario);
 		}
 
 		return usuario;
 	}
+
 
 	public Usuario buscarLogado(String login) throws SQLException {
 
@@ -374,23 +326,7 @@ public class UsuarioRepository {
 
 		while (resultado.next()) {
 
-			usuario.setId(resultado.getLong("id"));
-			usuario.setNome(resultado.getString("nome"));
-			usuario.setEmail(resultado.getString("email"));
-			usuario.setLogin(resultado.getString("login"));
-			usuario.setSenha(resultado.getString("senha"));
-			usuario.setAdm(resultado.getBoolean("adm"));
-			usuario.setPerfil(resultado.getString("perfil"));
-			usuario.setSexo(resultado.getString("sexo"));
-			usuario.setFoto(resultado.getString("foto"));
-			usuario.setCep(resultado.getString("cep"));
-			usuario.setLogradouro(resultado.getString("logradouro"));
-			usuario.setBairro(resultado.getString("bairro"));
-			usuario.setLocalidade(resultado.getString("localidade"));
-			usuario.setUf(resultado.getString("uf"));
-			usuario.setNumero(resultado.getString("numero"));
-			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
-			usuario.setRendaMensal(resultado.getDouble("renda_mensal"));
+			toModelUsuario(resultado, usuario);
 		}
 
 		return usuario;
@@ -408,22 +344,7 @@ public class UsuarioRepository {
 
 		while (resultado.next()) {
 
-			usuario.setId(resultado.getLong("id"));
-			usuario.setNome(resultado.getString("nome"));
-			usuario.setEmail(resultado.getString("email"));
-			usuario.setLogin(resultado.getString("login"));
-			usuario.setSenha(resultado.getString("senha"));
-			usuario.setPerfil(resultado.getString("perfil"));
-			usuario.setSexo(resultado.getString("sexo"));
-			usuario.setFoto(resultado.getString("foto"));
-			usuario.setCep(resultado.getString("cep"));
-			usuario.setLogradouro(resultado.getString("logradouro"));
-			usuario.setBairro(resultado.getString("bairro"));
-			usuario.setLocalidade(resultado.getString("localidade"));
-			usuario.setUf(resultado.getString("uf"));
-			usuario.setNumero(resultado.getString("numero"));
-			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
-			usuario.setRendaMensal(resultado.getDouble("renda_mensal"));
+			toModelUsuario(resultado, usuario);
 		}
 
 		return usuario;
@@ -441,23 +362,7 @@ public class UsuarioRepository {
 
 		while (resultado.next()) {
 
-			usuario.setId(resultado.getLong("id"));
-			usuario.setNome(resultado.getString("nome"));
-			usuario.setEmail(resultado.getString("email"));
-			usuario.setLogin(resultado.getString("login"));
-			usuario.setSenha(resultado.getString("senha"));
-			usuario.setPerfil(resultado.getString("perfil"));
-			usuario.setSexo(resultado.getString("sexo"));
-			usuario.setFoto(resultado.getString("foto"));
-			usuario.setExtensaoFoto(resultado.getString("extensao_foto"));
-			usuario.setCep(resultado.getString("cep"));
-			usuario.setLogradouro(resultado.getString("logradouro"));
-			usuario.setBairro(resultado.getString("bairro"));
-			usuario.setLocalidade(resultado.getString("localidade"));
-			usuario.setUf(resultado.getString("uf"));
-			usuario.setNumero(resultado.getString("numero"));
-			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
-			usuario.setRendaMensal(resultado.getDouble("renda_mensal"));
+			toModelUsuario(resultado, usuario);
 		}
 
 		return usuario;
@@ -476,23 +381,7 @@ public class UsuarioRepository {
 
 		while (resultado.next()) {
 
-			usuario.setId(resultado.getLong("id"));
-			usuario.setNome(resultado.getString("nome"));
-			usuario.setEmail(resultado.getString("email"));
-			usuario.setLogin(resultado.getString("login"));
-			usuario.setSenha(resultado.getString("senha"));
-			usuario.setPerfil(resultado.getString("perfil"));
-			usuario.setSexo(resultado.getString("sexo"));
-			usuario.setFoto(resultado.getString("foto"));
-			usuario.setExtensaoFoto(resultado.getString("extensao_foto"));
-			usuario.setCep(resultado.getString("cep"));
-			usuario.setLogradouro(resultado.getString("logradouro"));
-			usuario.setBairro(resultado.getString("bairro"));
-			usuario.setLocalidade(resultado.getString("localidade"));
-			usuario.setUf(resultado.getString("uf"));
-			usuario.setNumero(resultado.getString("numero"));
-			usuario.setDataNascimento(resultado.getDate("data_nascimento"));
-			usuario.setRendaMensal(resultado.getDouble("renda_mensal"));
+			toModelUsuario(resultado, usuario);
 		}
 
 		return usuario;
@@ -580,4 +469,23 @@ public class UsuarioRepository {
 
 	}
 
+	private void toModelUsuario(ResultSet resultado, Usuario usuario) throws SQLException {
+		usuario.setId(resultado.getLong("id"));
+		usuario.setNome(resultado.getString("nome"));
+		usuario.setEmail(resultado.getString("email"));
+		usuario.setLogin(resultado.getString("login"));
+		usuario.setSenha(resultado.getString("senha"));
+		usuario.setAdm(resultado.getBoolean("adm"));
+		usuario.setPerfil(resultado.getString("perfil"));
+		usuario.setSexo(resultado.getString("sexo"));
+		usuario.setFoto(resultado.getString("foto"));
+		usuario.setCep(resultado.getString("cep"));
+		usuario.setLogradouro(resultado.getString("logradouro"));
+		usuario.setBairro(resultado.getString("bairro"));
+		usuario.setLocalidade(resultado.getString("localidade"));
+		usuario.setUf(resultado.getString("uf"));
+		usuario.setNumero(resultado.getString("numero"));
+		usuario.setDataNascimento(resultado.getDate("data_nascimento"));
+		usuario.setRendaMensal(resultado.getDouble("renda_mensal"));
+	}
 }
