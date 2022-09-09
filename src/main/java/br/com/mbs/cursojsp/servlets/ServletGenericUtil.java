@@ -3,11 +3,13 @@ package br.com.mbs.cursojsp.servlets;
 import java.io.Serializable;
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import br.com.mbs.cursojsp.dao.UsuarioRepository;
 import br.com.mbs.cursojsp.model.Usuario;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
+
 
 public class ServletGenericUtil extends HttpServlet implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -6,7 +6,8 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
-import jakarta.servlet.ServletContext;
+import javax.servlet.ServletContext;
+
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporter;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -21,7 +22,7 @@ public class ReportUtils implements Serializable{
 	
 	public byte[] geraRelatorioPDF(List<?> listaDados, String nomeRelatorio, HashMap<String, Object> params ,ServletContext servletContext) throws JRException {
 		
-		var dataSource = new JRBeanCollectionDataSource(listaDados);
+		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listaDados);
 		
 		String caminhoJasper = servletContext.getRealPath("relatorios") + File.separator + nomeRelatorio + ".jasper";
 		JasperPrint print = JasperFillManager.fillReport(caminhoJasper, params, dataSource);
@@ -31,7 +32,7 @@ public class ReportUtils implements Serializable{
 	
 	public byte[] geraRelatorioExcel(List<?> listaDados, String nomeRelatorio, HashMap<String, Object> params ,ServletContext servletContext) throws JRException {
 		
-		var dataSource = new JRBeanCollectionDataSource(listaDados);
+		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(listaDados);
 		
 		String caminhoJasper = servletContext.getRealPath("relatorios") + File.separator + nomeRelatorio + ".jasper";
 		JasperPrint print = JasperFillManager.fillReport(caminhoJasper, params, dataSource);

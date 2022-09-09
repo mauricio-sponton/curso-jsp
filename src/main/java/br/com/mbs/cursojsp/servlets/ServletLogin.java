@@ -2,15 +2,17 @@ package br.com.mbs.cursojsp.servlets;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import br.com.mbs.cursojsp.dao.LoginRepository;
 import br.com.mbs.cursojsp.dao.UsuarioRepository;
 import br.com.mbs.cursojsp.model.Usuario;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 
 @WebServlet(urlPatterns = { "/principal/ServletLogin" })
 public class ServletLogin extends HttpServlet {
@@ -53,7 +55,7 @@ public class ServletLogin extends HttpServlet {
 
 			if (login != null && !login.isEmpty() && senha != null && !senha.isEmpty()) {
 
-				var usuario = new Usuario();
+				Usuario usuario = new Usuario();
 				usuario.setLogin(login);
 				usuario.setSenha(senha);
 

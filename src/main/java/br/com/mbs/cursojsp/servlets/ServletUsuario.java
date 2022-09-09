@@ -9,8 +9,15 @@ import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
-import org.apache.tomcat.jakartaee.commons.compress.utils.IOUtils;
-import org.apache.tomcat.util.codec.binary.Base64;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+import org.apache.commons.codec.binary.Base64;
+import org.apache.poi.util.IOUtils;
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -20,12 +27,6 @@ import br.com.mbs.cursojsp.dao.UsuarioRepository;
 import br.com.mbs.cursojsp.dto.GraficoSalarioUsuarioDTO;
 import br.com.mbs.cursojsp.model.Usuario;
 import br.com.mbs.cursojsp.util.ReportUtils;
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.MultipartConfig;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
 import net.sf.jasperreports.engine.JRException;
 
 @MultipartConfig

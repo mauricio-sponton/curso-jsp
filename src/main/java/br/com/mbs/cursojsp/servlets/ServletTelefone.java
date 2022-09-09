@@ -4,13 +4,15 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import br.com.mbs.cursojsp.dao.TelefoneRepository;
 import br.com.mbs.cursojsp.dao.UsuarioRepository;
 import br.com.mbs.cursojsp.model.Telefone;
 import br.com.mbs.cursojsp.model.Usuario;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+
 
 public class ServletTelefone extends ServletGenericUtil {
 	private static final long serialVersionUID = 1L;
